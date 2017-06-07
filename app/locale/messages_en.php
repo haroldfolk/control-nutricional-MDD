@@ -494,7 +494,7 @@ $messages_en['val'] = '';
 // file(s): public/js/ui/home/template/HomePage.html
 $messages_en['Welcome'] = 'Bienvenido';
 // file(s): public/js/ui/home/template/HomePage.html
-$messages_en['What do you want to do next?'] = 'Que quires hacer ?';
+$messages_en['What do you want to do next?'] = 'Que quieres hacer ?';
 // file(s): lib/util/GraphicsUtil.php
 $messages_en['Wrong image height. Image height must be %1% %2%px - actual image height is %3%px.'] = '';
 // file(s): lib/util/GraphicsUtil.php
