@@ -1870,6 +1870,15 @@
               <packagedElement xmi:type="uml:Class" xmi:id="_AGNtcEwgEee62slmO6PM1A" name="HistoricoClinico">
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_HyTPYEwgEee62slmO6PM1A" name="motivo" type="_agg3ALQwEeOLlbB2YLI0iw" isUnique="false"/>
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_kB7RYEwhEee62slmO6PM1A" name="descripcion" type="_agg3ALQwEeOLlbB2YLI0iw" isUnique="false"/>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_oDQt8EwjEee62slmO6PM1A" name="observaciones"/>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_SLX_MEwkEee62slmO6PM1A" name="paciente" type="_pAMlcEjwEeePM6e6eZiCcw" association="_SLWKAEwkEee62slmO6PM1A"/>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_TJ-VcEwkEee62slmO6PM1A" name="paciente" type="_agg3ALQwEeOLlbB2YLI0iw" isUnique="false"/>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Association" xmi:id="_SLWKAEwkEee62slmO6PM1A" memberEnd="_SLX_MEwkEee62slmO6PM1A _SLX_MUwkEee62slmO6PM1A">
+                <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_SLXYIEwkEee62slmO6PM1A" source="org.eclipse.papyrus">
+                  <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_SLXYIUwkEee62slmO6PM1A" key="nature" value="UML_Nature"/>
+                </eAnnotations>
+                <ownedEnd xmi:type="uml:Property" xmi:id="_SLX_MUwkEee62slmO6PM1A" name="historicoclinico" type="_AGNtcEwgEee62slmO6PM1A" association="_SLWKAEwkEee62slmO6PM1A"/>
               </packagedElement>
             </packagedElement>
             <packagedElement xmi:type="uml:Package" xmi:id="_B7Q5IPu5EeOmMdys2glKCA" name="controller">
@@ -2131,4 +2140,6 @@
   <Chronos:ChiValue xmi:id="_q_WWgEwhEee62slmO6PM1A" base_Property="_kB7RYEwhEee62slmO6PM1A"/>
   <Chronos:ChiValue xmi:id="_Hea_MEwiEee62slmO6PM1A" is_editable="true" restrictions_match="required" base_Property="_SMWo4EwfEee62slmO6PM1A"/>
   <Chronos:ChiValue xmi:id="_8w6eMEwiEee62slmO6PM1A" is_editable="true" restrictions_match="date&#x9;" base_Property="_5LJ4cEwiEee62slmO6PM1A"/>
+  <Chronos:ChiValue xmi:id="_p-KUYEwjEee62slmO6PM1A" is_editable="true" restrictions_match="" base_Property="_oDQt8EwjEee62slmO6PM1A"/>
+  <Chronos:ChiValueRef xmi:id="_a5XDAEwkEee62slmO6PM1A" base_Property="_TJ-VcEwkEee62slmO6PM1A" reference_value="Paciente" reference_type="nombre"/>
 </xmi:XMI>
