@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xmi:XMI xmi:version="2.1" xmlns:xmi="http://www.omg.org/spec/XMI/2.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Chronos="http:///schemas/Chronos/_jAH0gM-nEd6fypAGO026Fw/0" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/2.1.0/UML" xsi:schemaLocation="http:///schemas/Chronos/_jAH0gM-nEd6fypAGO026Fw/0 chronos.profile.uml#_jARlgc-nEd6fypAGO026Fw">
+<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Chronos="http:///schemas/Chronos/_jAH0gM-nEd6fypAGO026Fw/0" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xsi:schemaLocation="http:///schemas/Chronos/_jAH0gM-nEd6fypAGO026Fw/0 chronos.profile.uml#_jARlgc-nEd6fypAGO026Fw">
   <uml:Model xmi:id="_ItyOULQGEeOIMOFxCilDfw" name="model">
     <packagedElement xmi:type="uml:Package" xmi:id="_e7sa8LQGEeOIMOFxCilDfw" name="wcmf test">
       <packagedElement xmi:type="uml:Package" xmi:id="_krkH0LQGEeOIMOFxCilDfw" name="root">
@@ -2005,6 +2005,7 @@
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_DU-pgExiEeeggcVyDSQGng"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_DVNTAExiEeeggcVyDSQGng" value="*"/>
                 </ownedAttribute>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_t30yUEyLEeeggcVyDSQGng" name="direccion" type="_agg3ALQwEeOLlbB2YLI0iw" isUnique="false"/>
               </packagedElement>
               <packagedElement xmi:type="uml:Class" xmi:id="_03SGUExgEeeggcVyDSQGng" name="Cargo">
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_7CK7QExgEeeggcVyDSQGng" name="tipo" type="_agg3ALQwEeOLlbB2YLI0iw" isUnique="false"/>
@@ -2046,6 +2047,7 @@
                 </eAnnotations>
               </packagedElement>
               <packagedElement xmi:type="uml:Class" xmi:id="_ROqrQExkEeeggcVyDSQGng" name="Controlnut">
+                <generalization xmi:type="uml:Generalization" xmi:id="_wrXwoEyOEeeggcVyDSQGng" general="_ylwfELQ4EeOQ5oJFa1i8cg"/>
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_WiLzUExkEeeggcVyDSQGng" name="peso_gramos" type="_dbezULQwEeOLlbB2YLI0iw" isUnique="false"/>
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_rNC40ExkEeeggcVyDSQGng" name="talla_cm" type="_dbezULQwEeOLlbB2YLI0iw" isUnique="false"/>
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_DT6yMkxlEeeggcVyDSQGng" name="enfermera" type="_e8JPQExhEeeggcVyDSQGng" association="_DT6LIExlEeeggcVyDSQGng">
@@ -2329,8 +2331,8 @@
   <Chronos:ChiSystem xmi:id="_XayrQEZOEeeLZa5OKBzA3A" plattform="wcmf" config="security.ini" base_Class="_XVX_wEZOEeeLZa5OKBzA3A"/>
   <Chronos:ChiSystem xmi:id="_dVkAkEZOEeeLZa5OKBzA3A" plattform="wcmf" config="security.ini" base_Class="_dVhkUEZOEeeLZa5OKBzA3A"/>
   <Chronos:ChiNode xmi:id="_oYMIYExgEeeggcVyDSQGng" base_Class="_jeEXwExgEeeggcVyDSQGng" display_value="nombre,nit"/>
-  <Chronos:ChiValue xmi:id="_tcPREExgEeeggcVyDSQGng" is_editable="true" base_Property="_qe1r0ExgEeeggcVyDSQGng"/>
-  <Chronos:ChiValue xmi:id="_xhsDgExgEeeggcVyDSQGng" is_editable="true" base_Property="_t8QN4ExgEeeggcVyDSQGng"/>
+  <Chronos:ChiValue xmi:id="_tcPREExgEeeggcVyDSQGng" is_editable="true" restrictions_match="required" base_Property="_qe1r0ExgEeeggcVyDSQGng"/>
+  <Chronos:ChiValue xmi:id="_xhsDgExgEeeggcVyDSQGng" is_editable="true" restrictions_match="required" base_Property="_t8QN4ExgEeeggcVyDSQGng"/>
   <Chronos:ChiNode xmi:id="_2PB8YExgEeeggcVyDSQGng" base_Class="_03SGUExgEeeggcVyDSQGng" display_value="tipo,descripcion"/>
   <Chronos:ChiValue xmi:id="_-JvwMExgEeeggcVyDSQGng" is_editable="true" base_Property="_7CK7QExgEeeggcVyDSQGng"/>
   <Chronos:ChiValue xmi:id="_BvnqsExhEeeggcVyDSQGng" is_editable="true" base_Property="_-33acExgEeeggcVyDSQGng"/>
@@ -2343,4 +2345,5 @@
   <Chronos:ChiNode xmi:id="_VANDMExkEeeggcVyDSQGng" base_Class="_ROqrQExkEeeggcVyDSQGng" display_value="peso_gramos,talla_cm"/>
   <Chronos:ChiValue xmi:id="_tkqQcExkEeeggcVyDSQGng" db_data_type="INT" is_editable="true" base_Property="_WiLzUExkEeeggcVyDSQGng"/>
   <Chronos:ChiValue xmi:id="_6wh00ExkEeeggcVyDSQGng" db_data_type="INT" is_editable="true" base_Property="_rNC40ExkEeeggcVyDSQGng"/>
+  <Chronos:ChiValue xmi:id="_nfnywEyOEeeggcVyDSQGng" is_editable="true" base_Property="_t30yUEyLEeeggcVyDSQGng"/>
 </xmi:XMI>
