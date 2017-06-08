@@ -1682,7 +1682,7 @@
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_fcwjkavwEeaQUopA1XIUeQ" name="title" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_fcwjkqvwEeaQUopA1XIUeQ" value="1"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_fcwjk6vwEeaQUopA1XIUeQ" value="1"/>
-                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_fcwjlKvwEeaQUopA1XIUeQ" value="Consultorio Dental SW"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_fcwjlKvwEeaQUopA1XIUeQ" value="AIEPI Control Nutricional"/>
                 </ownedAttribute>
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_fcwjmavwEeaQUopA1XIUeQ" name="rootTypes" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_fcwjmqvwEeaQUopA1XIUeQ" value="1"/>
@@ -2374,8 +2374,8 @@
   <Chronos:ChiNode xmi:id="_RylUoEw4EeeYE_2aBY3pcQ" base_Class="_MSzSMEw4EeeYE_2aBY3pcQ" display_value="nombre,direccion"/>
   <Chronos:ChiValue xmi:id="_a0zjEEw4EeeYE_2aBY3pcQ" is_editable="true" base_Property="_VRS3MEw4EeeYE_2aBY3pcQ"/>
   <Chronos:ChiValue xmi:id="_iom2kEw4EeeYE_2aBY3pcQ" is_editable="true" base_Property="_d-cNgEw4EeeYE_2aBY3pcQ"/>
-  <Chronos:ChiValue xmi:id="_mHIy8Ew4EeeYE_2aBY3pcQ" base_Property="_k2iGsEw4EeeYE_2aBY3pcQ"/>
+  <Chronos:ChiValue xmi:id="_mHIy8Ew4EeeYE_2aBY3pcQ" is_editable="true" base_Property="_k2iGsEw4EeeYE_2aBY3pcQ"/>
   <Chronos:ChiNode xmi:id="_5HYJsEw4EeeYE_2aBY3pcQ" base_Class="_23YdAEw4EeeYE_2aBY3pcQ" display_value="nombre"/>
   <Chronos:ChiValue xmi:id="__HEbQEw4EeeYE_2aBY3pcQ" is_editable="true" base_Property="_635FEEw4EeeYE_2aBY3pcQ"/>
-  <Chronos:ChiValue xmi:id="_E3ycsEw5EeeYE_2aBY3pcQ" base_Property="_BG92cEw5EeeYE_2aBY3pcQ"/>
+  <Chronos:ChiValue xmi:id="_E3ycsEw5EeeYE_2aBY3pcQ" is_editable="true" base_Property="_BG92cEw5EeeYE_2aBY3pcQ"/>
 </xmi:XMI>
