@@ -2003,14 +2003,6 @@
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_wrEJIEuSEeekaoSzJ9YKtw" name="apellido" type="_agg3ALQwEeOLlbB2YLI0iw"/>
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_8JdfEEuSEeekaoSzJ9YKtw" name="fecha_nacimiento" type="_X7HiELQwEeOLlbB2YLI0iw"/>
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_IEGsIEuTEeekaoSzJ9YKtw" name="telefono" type="_dbezULQwEeOLlbB2YLI0iw"/>
-                <ownedAttribute xmi:type="uml:Property" xmi:id="_EekqckxEEeeggcVyDSQGng" name="historiaclinica" type="_dFM3YExDEeeggcVyDSQGng" association="_EekDYExEEeeggcVyDSQGng">
-                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_GO3jYExEEeeggcVyDSQGng"/>
-                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_GO5YkExEEeeggcVyDSQGng" value="*"/>
-                </ownedAttribute>
-                <ownedAttribute xmi:type="uml:Property" xmi:id="_ri-ac0xBEeeggcVyDSQGng" name="controlnutricional" type="_Wl6KoExBEeeggcVyDSQGng" association="_ri9zYExBEeeggcVyDSQGng">
-                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_trlswExBEeeggcVyDSQGng"/>
-                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_trpXIExBEeeggcVyDSQGng" value="*"/>
-                </ownedAttribute>
               </packagedElement>
               <packagedElement xmi:type="uml:Class" xmi:id="_MSzSMEw4EeeYE_2aBY3pcQ" name="Centro">
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_VRS3MEw4EeeYE_2aBY3pcQ" name="nombre" type="_agg3ALQwEeOLlbB2YLI0iw" isUnique="false"/>
@@ -2032,10 +2024,6 @@
                 </ownedAttribute>
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_URXAAUw_EeeggcVyDSQGng" name="centro" type="_MSzSMEw4EeeYE_2aBY3pcQ" association="_URWY8Ew_EeeggcVyDSQGng"/>
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_YJOCYEw_EeeggcVyDSQGng" name="centro_actual" type="_agg3ALQwEeOLlbB2YLI0iw" isUnique="false"/>
-                <ownedAttribute xmi:type="uml:Property" xmi:id="_wpMtY0xBEeeggcVyDSQGng" name="controlnutricional" type="_Wl6KoExBEeeggcVyDSQGng" association="_wpMGUExBEeeggcVyDSQGng">
-                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_x22zUExBEeeggcVyDSQGng"/>
-                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_x252oExBEeeggcVyDSQGng" value="*"/>
-                </ownedAttribute>
               </packagedElement>
               <packagedElement xmi:type="uml:Association" xmi:id="_Kk3skEw_EeeggcVyDSQGng" memberEnd="_Kk7W8Ew_EeeggcVyDSQGng _Kk7-AEw_EeeggcVyDSQGng">
                 <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Kk6v4Ew_EeeggcVyDSQGng" source="org.eclipse.papyrus">
@@ -2072,11 +2060,19 @@
                 <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_ri-acExBEeeggcVyDSQGng" source="org.eclipse.papyrus">
                   <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_ri-acUxBEeeggcVyDSQGng" key="nature" value="UML_Nature"/>
                 </eAnnotations>
+                <ownedEnd xmi:type="uml:Property" xmi:id="_ri-ac0xBEeeggcVyDSQGng" name="controlnutricional" type="_Wl6KoExBEeeggcVyDSQGng" association="_ri9zYExBEeeggcVyDSQGng">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_trlswExBEeeggcVyDSQGng"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_trpXIExBEeeggcVyDSQGng" value="*"/>
+                </ownedEnd>
               </packagedElement>
               <packagedElement xmi:type="uml:Association" xmi:id="_wpMGUExBEeeggcVyDSQGng" memberEnd="_wpMtYkxBEeeggcVyDSQGng _wpMtY0xBEeeggcVyDSQGng">
                 <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_wpMtYExBEeeggcVyDSQGng" source="org.eclipse.papyrus">
                   <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_wpMtYUxBEeeggcVyDSQGng" key="nature" value="UML_Nature"/>
                 </eAnnotations>
+                <ownedEnd xmi:type="uml:Property" xmi:id="_wpMtY0xBEeeggcVyDSQGng" name="controlnutricional" type="_Wl6KoExBEeeggcVyDSQGng" association="_wpMGUExBEeeggcVyDSQGng">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_x22zUExBEeeggcVyDSQGng"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_x252oExBEeeggcVyDSQGng" value="*"/>
+                </ownedEnd>
               </packagedElement>
               <packagedElement xmi:type="uml:Class" xmi:id="_dFM3YExDEeeggcVyDSQGng" name="Historiaclinica">
                 <generalization xmi:type="uml:Generalization" xmi:id="_iLqI8ExFEeeggcVyDSQGng" general="_ylwfELQ4EeOQ5oJFa1i8cg"/>
@@ -2093,6 +2089,10 @@
                 <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_EekDYUxEEeeggcVyDSQGng" source="org.eclipse.papyrus">
                   <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_EekqcExEEeeggcVyDSQGng" key="nature" value="UML_Nature"/>
                 </eAnnotations>
+                <ownedEnd xmi:type="uml:Property" xmi:id="_EekqckxEEeeggcVyDSQGng" name="historiaclinica" type="_dFM3YExDEeeggcVyDSQGng" association="_EekDYExEEeeggcVyDSQGng">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_GO3jYExEEeeggcVyDSQGng"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_GO5YkExEEeeggcVyDSQGng" value="*"/>
+                </ownedEnd>
               </packagedElement>
               <packagedElement xmi:type="uml:Association" xmi:id="_NO7s0ExEEeeggcVyDSQGng" memberEnd="_NO8T4kxEEeeggcVyDSQGng _NO-wIExEEeeggcVyDSQGng">
                 <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_NO8T4ExEEeeggcVyDSQGng" source="org.eclipse.papyrus">
@@ -2360,7 +2360,7 @@
   <Chronos:ChiActionKey xmi:id="_M0REkC38EeeXlbGiPETVvw" action="continue" base_Association="_ER4z0C38EeeXlbGiPETVvw"/>
   <Chronos:ChiSystem xmi:id="_XayrQEZOEeeLZa5OKBzA3A" plattform="wcmf" config="security.ini" base_Class="_XVX_wEZOEeeLZa5OKBzA3A"/>
   <Chronos:ChiSystem xmi:id="_dVkAkEZOEeeLZa5OKBzA3A" plattform="wcmf" config="security.ini" base_Class="_dVhkUEZOEeeLZa5OKBzA3A"/>
-  <Chronos:ChiNode xmi:id="_nBKFEEuREeekaoSzJ9YKtw" base_Class="_j3XCkEuREeekaoSzJ9YKtw" display_value="ci, nombre, apellido, fecha_nacimiento, telefono"/>
+  <Chronos:ChiNode xmi:id="_nBKFEEuREeekaoSzJ9YKtw" base_Class="_j3XCkEuREeekaoSzJ9YKtw" display_value="nombre, apellido, telefono"/>
   <Chronos:ChiValue xmi:id="_rXQtMEuSEeekaoSzJ9YKtw" is_editable="true" restrictions_match="required" base_Property="_OfDLwEuSEeekaoSzJ9YKtw"/>
   <Chronos:ChiValue xmi:id="_4bR9IEuSEeekaoSzJ9YKtw" is_editable="true" restrictions_match="required" base_Property="_wrEJIEuSEeekaoSzJ9YKtw"/>
   <Chronos:ChiValue xmi:id="_BA_OsEuTEeekaoSzJ9YKtw" db_data_type="DATE" is_editable="true" input_type="date" restrictions_match="required" base_Property="_8JdfEEuSEeekaoSzJ9YKtw"/>
