@@ -28,7 +28,7 @@
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_86xZi6prEeaGbp23C_zkpg" name="color" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_86xZjKprEeaGbp23C_zkpg" value="1"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_86xZjaprEeaGbp23C_zkpg" value="1"/>
-                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_86xZjqprEeaGbp23C_zkpg" value="#333333"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_86xZjqprEeaGbp23C_zkpg" value="#0ACFB8"/>
                 </ownedAttribute>
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_86xZj6prEeaGbp23C_zkpg" name="rootTypes" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_86xZkKprEeaGbp23C_zkpg" value="1"/>
@@ -1682,12 +1682,12 @@
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_fcwjkavwEeaQUopA1XIUeQ" name="title" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_fcwjkqvwEeaQUopA1XIUeQ" value="1"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_fcwjk6vwEeaQUopA1XIUeQ" value="1"/>
-                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_fcwjlKvwEeaQUopA1XIUeQ" value="WCMF TEST MODEL"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_fcwjlKvwEeaQUopA1XIUeQ" value="Centro de Control Nutricional"/>
                 </ownedAttribute>
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_fcwjmavwEeaQUopA1XIUeQ" name="rootTypes" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_fcwjmqvwEeaQUopA1XIUeQ" value="1"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_fcwjm6vwEeaQUopA1XIUeQ" value="1"/>
-                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_fcwjnKvwEeaQUopA1XIUeQ" value="{Centro,Cargo,Enfermera}"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_fcwjnKvwEeaQUopA1XIUeQ" value="{Centro,Cargo,Enfermera,Paciente,Controlnut}"/>
                 </ownedAttribute>
               </packagedElement>
             </packagedElement>
@@ -2017,6 +2017,10 @@
               <packagedElement xmi:type="uml:Class" xmi:id="_KKCSQExhEeeggcVyDSQGng" name="Paciente">
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_MpMcUExhEeeggcVyDSQGng" name="nombre" type="_agg3ALQwEeOLlbB2YLI0iw" isUnique="false"/>
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_RgneQExhEeeggcVyDSQGng" name="fechanac" type="_X7HiELQwEeOLlbB2YLI0iw" isUnique="false"/>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_EFuppExlEeeggcVyDSQGng" name="controlnut" type="_ROqrQExkEeeggcVyDSQGng" aggregation="composite" association="_EFupoExlEeeggcVyDSQGng">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_56UJEExlEeeggcVyDSQGng"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_56VXMExlEeeggcVyDSQGng" value="*"/>
+                </ownedAttribute>
               </packagedElement>
               <packagedElement xmi:type="uml:Class" xmi:id="_e8JPQExhEeeggcVyDSQGng" name="Enfermera">
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_h9aA0ExhEeeggcVyDSQGng" name="nombre" type="_agg3ALQwEeOLlbB2YLI0iw" isUnique="false"/>
@@ -2026,6 +2030,10 @@
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_8XtVYExhEeeggcVyDSQGng" value="1"/>
                 </ownedAttribute>
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_KG1-4ExiEeeggcVyDSQGng" name="cargo" type="_03SGUExgEeeggcVyDSQGng" association="_KG0JsExiEeeggcVyDSQGng"/>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_DT6yM0xlEeeggcVyDSQGng" name="controlnut" type="_ROqrQExkEeeggcVyDSQGng" aggregation="composite" association="_DT6LIExlEeeggcVyDSQGng">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_u9LGEExlEeeggcVyDSQGng"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_u9pAIExlEeeggcVyDSQGng" value="*"/>
+                </ownedAttribute>
               </packagedElement>
               <packagedElement xmi:type="uml:Association" xmi:id="_2ziiMExhEeeggcVyDSQGng" memberEnd="_2zjJQExhEeeggcVyDSQGng _2zjJQUxhEeeggcVyDSQGng">
                 <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_2ziiMUxhEeeggcVyDSQGng" source="org.eclipse.papyrus">
@@ -2035,6 +2043,28 @@
               <packagedElement xmi:type="uml:Association" xmi:id="_KG0JsExiEeeggcVyDSQGng" memberEnd="_KG0wwUxiEeeggcVyDSQGng _KG1-4ExiEeeggcVyDSQGng">
                 <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_KG0JsUxiEeeggcVyDSQGng" source="org.eclipse.papyrus">
                   <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_KG0wwExiEeeggcVyDSQGng" key="nature" value="UML_Nature"/>
+                </eAnnotations>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Class" xmi:id="_ROqrQExkEeeggcVyDSQGng" name="Controlnut">
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_WiLzUExkEeeggcVyDSQGng" name="peso_gramos" type="_dbezULQwEeOLlbB2YLI0iw" isUnique="false"/>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_rNC40ExkEeeggcVyDSQGng" name="talla_cm" type="_dbezULQwEeOLlbB2YLI0iw" isUnique="false"/>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_DT6yMkxlEeeggcVyDSQGng" name="enfermera" type="_e8JPQExhEeeggcVyDSQGng" association="_DT6LIExlEeeggcVyDSQGng">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_sZXskExlEeeggcVyDSQGng" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_sZxVMExlEeeggcVyDSQGng" value="1"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_EFupo0xlEeeggcVyDSQGng" name="paciente" type="_KKCSQExhEeeggcVyDSQGng" association="_EFupoExlEeeggcVyDSQGng">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_zX6zEExlEeeggcVyDSQGng" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_zX8BMExlEeeggcVyDSQGng" value="1"/>
+                </ownedAttribute>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Association" xmi:id="_DT6LIExlEeeggcVyDSQGng" memberEnd="_DT6yMkxlEeeggcVyDSQGng _DT6yM0xlEeeggcVyDSQGng">
+                <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_DT6yMExlEeeggcVyDSQGng" source="org.eclipse.papyrus">
+                  <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_DT6yMUxlEeeggcVyDSQGng" key="nature" value="UML_Nature"/>
+                </eAnnotations>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Association" xmi:id="_EFupoExlEeeggcVyDSQGng" memberEnd="_EFupo0xlEeeggcVyDSQGng _EFuppExlEeeggcVyDSQGng">
+                <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_EFupoUxlEeeggcVyDSQGng" source="org.eclipse.papyrus">
+                  <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_EFupokxlEeeggcVyDSQGng" key="nature" value="UML_Nature"/>
                 </eAnnotations>
               </packagedElement>
             </packagedElement>
@@ -2307,7 +2337,10 @@
   <Chronos:ChiNode xmi:id="_LttEcExhEeeggcVyDSQGng" base_Class="_KKCSQExhEeeggcVyDSQGng" display_value="nombre,fechanac"/>
   <Chronos:ChiValue xmi:id="_P22EEExhEeeggcVyDSQGng" is_editable="true" base_Property="_MpMcUExhEeeggcVyDSQGng"/>
   <Chronos:ChiValue xmi:id="_VUVAcExhEeeggcVyDSQGng" db_data_type="DATE" is_editable="true" input_type="date" base_Property="_RgneQExhEeeggcVyDSQGng"/>
-  <Chronos:ChiNode xmi:id="_g5Dn4ExhEeeggcVyDSQGng" base_Class="_e8JPQExhEeeggcVyDSQGng" display_value="nombre"/>
+  <Chronos:ChiNode xmi:id="_g5Dn4ExhEeeggcVyDSQGng" base_Class="_e8JPQExhEeeggcVyDSQGng" display_value="nombre,fechaing"/>
   <Chronos:ChiValue xmi:id="_ksmyAExhEeeggcVyDSQGng" is_editable="true" base_Property="_h9aA0ExhEeeggcVyDSQGng"/>
   <Chronos:ChiValue xmi:id="_rTYRsExhEeeggcVyDSQGng" db_data_type="DATE" is_editable="true" input_type="date" base_Property="_oe4w0ExhEeeggcVyDSQGng"/>
+  <Chronos:ChiNode xmi:id="_VANDMExkEeeggcVyDSQGng" base_Class="_ROqrQExkEeeggcVyDSQGng" display_value="peso_gramos,talla_cm"/>
+  <Chronos:ChiValue xmi:id="_tkqQcExkEeeggcVyDSQGng" db_data_type="INT" is_editable="true" base_Property="_WiLzUExkEeeggcVyDSQGng"/>
+  <Chronos:ChiValue xmi:id="_6wh00ExkEeeggcVyDSQGng" db_data_type="INT" is_editable="true" base_Property="_rNC40ExkEeeggcVyDSQGng"/>
 </xmi:XMI>
