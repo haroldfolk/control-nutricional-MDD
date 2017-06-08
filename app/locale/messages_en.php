@@ -34,7 +34,7 @@ $messages_en['Active'] = '';
 // file(s): src/model/wcmf/_base/UserRDBMapper.php
 $messages_en['active'] = '';
 // file(s): public/js/ui/admin/template/AdminPage.html, public/js/ui/_include/widget/template/NavigationWidget.html
-$messages_en['Administration'] = 'Administración';
+$messages_en['Administration'] = '';
 // file(s): src/model/wcmf/_base/LanguageRDBMapper.php
 $messages_en['A language for which a translation of the model can be created. The code is arbitrary but it is recommended to use the ISO language codes (en, de, it, ...).'] = '';
 // file(s): public/js/ui/data/widget/PermissionDlgWidget.js
@@ -88,7 +88,7 @@ $messages_en['Confirm Object Deletion'] = '';
 // file(s): src/model/_base/ChapterRDBMapper.php
 $messages_en['content'] = '';
 // file(s): public/js/ui/data/EntityListPage.js, public/js/ui/data/EntityPage.js, public/js/ui/link/BrowsePage.js, public/js/ui/link/template/BrowsePage.html, public/js/ui/media/template/BrowsePage.html, public/js/ui/_include/widget/template/NavigationWidget.html
-$messages_en['Content'] = 'Contenido';
+$messages_en['Content'] = '';
 // file(s): src/model/wcmf/_base/PermissionRDBMapper.php
 $messages_en['context'] = '';
 // file(s): application/controller/CopyController.php
@@ -98,13 +98,13 @@ $messages_en['Copying <em>%0%</em>'] = '';
 // file(s): application/controller/CopyController.php
 $messages_en['Copying tree: continue with %0%'] = '';
 // file(s): public/js/locale/Dictionary.js, public/js/ui/data/widget/template/EntityListWidget.html
-$messages_en['Create %0%'] = 'Registrar %0%';
+$messages_en['Create %0%'] = '';
 // file(s): public/js/ui/home/HomePage.js, src/model/wcmf/_base/LockRDBMapper.php, src/model/_base/AuthorRDBMapper.php, src/model/_base/BookRDBMapper.php, src/model/_base/ChapterRDBMapper.php, src/model/_base/ImageRDBMapper.php, src/model/_base/PublisherRDBMapper.php
-$messages_en['created'] = 'creado';
+$messages_en['created'] = '';
 // file(s): public/js/ui/admin/template/AdminPage.html
 $messages_en['Create Search Index'] = '';
 // file(s): public/js/ui/home/HomePage.js, src/model/_base/AuthorRDBMapper.php, src/model/_base/BookRDBMapper.php, src/model/_base/ChapterRDBMapper.php, src/model/_base/ImageRDBMapper.php, src/model/_base/PublisherRDBMapper.php
-$messages_en['creator'] = 'creador';
+$messages_en['creator'] = '';
 // file(s): application/views/plugins/function.daterange.php
 $messages_en['d.'] = '';
 // file(s): application/views/plugins/function.daterange.php
@@ -118,7 +118,7 @@ $messages_en['DBSequence [Pl.]'] = 'DBSequences';
 // file(s): public/js/ui/data/widget/template/PermissionDlgWidget.html
 $messages_en['Default'] = '';
 // file(s): public/js/ui/admin/widget/template/PrincipalFormWidget.html, public/js/ui/data/widget/template/EntityFormWidget.html, public/js/ui/data/widget/template/PermissionDlgWidget.html
-$messages_en['Delete'] = 'Borrar';
+$messages_en['Delete'] = '';
 // file(s): public/js/ui/data/widget/PermissionDlgWidget.js
 $messages_en['deny'] = '';
 // file(s): src/model/_base/BookRDBMapper.php
@@ -176,7 +176,7 @@ $messages_en['fk_titlechapter_id'] = '';
 // file(s): src/model/wcmf/_base/NMUserRoleRDBMapper.php, src/model/wcmf/_base/UserConfigRDBMapper.php
 $messages_en['fk_user_id'] = '';
 // file(s): public/js/ui/home/HomePage.js, public/js/ui/_include/widget/template/NavigationWidget.html
-$messages_en['Home'] = 'Inicio';
+$messages_en['Home'] = '';
 // file(s): src/model/wcmf/_base/DBSequenceRDBMapper.php, src/model/wcmf/_base/LanguageRDBMapper.php, src/model/wcmf/_base/LockRDBMapper.php, src/model/wcmf/_base/PermissionRDBMapper.php, src/model/wcmf/_base/RoleRDBMapper.php, src/model/wcmf/_base/TranslationRDBMapper.php, src/model/wcmf/_base/UserConfigRDBMapper.php, src/model/wcmf/_base/UserRDBMapper.php, src/model/_base/AuthorRDBMapper.php, src/model/_base/BookRDBMapper.php, src/model/_base/ChapterRDBMapper.php, src/model/_base/ImageRDBMapper.php, src/model/_base/NMBookBookRDBMapper.php, src/model/_base/NMPublisherAuthorRDBMapper.php, src/model/_base/PublisherRDBMapper.php
 $messages_en['id'] = '';
 // file(s): src/model/_base/ImageRDBMapper.php
@@ -204,9 +204,9 @@ $messages_en['language'] = '';
 // file(s): src/model/wcmf/_base/LanguageRDBMapper.php
 $messages_en['Language [Pl.]'] = 'Languages';
 // file(s): public/js/ui/home/template/HomePage.html
-$messages_en['Last Updates'] = 'Últimas actualizaciones';
+$messages_en['Last Updates'] = '';
 // file(s): public/js/ui/home/HomePage.js, src/model/_base/AuthorRDBMapper.php, src/model/_base/BookRDBMapper.php, src/model/_base/ChapterRDBMapper.php, src/model/_base/ImageRDBMapper.php, src/model/_base/PublisherRDBMapper.php
-$messages_en['last_editor'] = 'último editor';
+$messages_en['last_editor'] = '';
 // file(s): public/js/ui/data/EntityListPage.js
 $messages_en['List view class for type <em>%0%</em> not found.'] = '';
 // file(s): application/controller/BatchDisplayController.php, public/js/ui/_include/widget/GridWidget.js
@@ -238,13 +238,13 @@ $messages_en['Media'] = '';
 // file(s): public/js/ui/home/template/HomePage.html, public/js/ui/link/template/BrowsePage.html, public/js/ui/media/template/BrowsePage.html, public/js/ui/_include/widget/template/NavigationWidget.html
 $messages_en['Media Pool'] = '';
 // file(s): public/js/ui/home/HomePage.js, src/model/_base/AuthorRDBMapper.php, src/model/_base/BookRDBMapper.php, src/model/_base/ChapterRDBMapper.php, src/model/_base/ImageRDBMapper.php, src/model/_base/PublisherRDBMapper.php
-$messages_en['modified'] = 'modificado';
+$messages_en['modified'] = '';
 // file(s): application/controller/CopyController.php
 $messages_en['Moving'] = '';
 // file(s): src/model/wcmf/_base/LanguageRDBMapper.php, src/model/wcmf/_base/RoleRDBMapper.php, src/model/wcmf/_base/UserConfigRDBMapper.php, src/model/wcmf/_base/UserRDBMapper.php, src/model/_base/AuthorRDBMapper.php, src/model/_base/ChapterRDBMapper.php, src/model/_base/PublisherRDBMapper.php
 $messages_en['name'] = '';
 // file(s): public/js/model/meta/Node.js, public/js/ui/data/EntityPage.js
-$messages_en['New <em>%0%</em>'] = 'Nuevo <em>%0%</em>';
+$messages_en['New <em>%0%</em>'] = '';
 // file(s): public/js/ui/settings/template/SettingsPage.html
 $messages_en['New password'] = '';
 // file(s): public/js/ui/settings/template/SettingsPage.html
@@ -312,7 +312,7 @@ $messages_en['Permission'] = '';
 // file(s): public/js/ui/admin/PermissionListPage.js, public/js/ui/admin/PermissionPage.js
 $messages_en['Permission Management'] = '';
 // file(s): public/js/ui/data/widget/PermissionDlgWidget.js, public/js/ui/data/widget/template/EntityFormWidget.html, public/js/ui/_include/widget/template/NavigationWidget.html
-$messages_en['Permissions'] = 'Permisos';
+$messages_en['Permissions'] = '';
 // file(s): public/js/action/Permissions.js, public/js/ui/data/widget/EntityFormWidget.js
 $messages_en['Permissions for <em>%0%</em>'] = '';
 // file(s): public/js/ui/data/widget/template/PermissionDlgWidget.html
@@ -358,7 +358,7 @@ $messages_en['Roles'] = '';
 // file(s): src/model/wcmf/_base/NMUserRoleRDBMapper.php, src/model/wcmf/_base/RoleRDBMapper.php
 $messages_en['Role [Pl.]'] = 'Roles';
 // file(s): public/js/ui/admin/widget/template/PrincipalFormWidget.html, public/js/ui/data/widget/PermissionDlgWidget.js, public/js/ui/data/widget/template/EntityFormWidget.html, public/js/ui/settings/template/SettingsPage.html
-$messages_en['Save'] = 'Guardar';
+$messages_en['Save'] = '';
 // file(s): public/js/ui/data/widget/EntityFormWidget.js, public/js/ui/data/widget/EntityListWidget.js, public/js/ui/data/widget/EntityRelationWidget.js
 $messages_en['Saving data'] = '';
 // file(s): public/js/ui/_include/widget/template/NavigationWidget.html
@@ -370,7 +370,7 @@ $messages_en['Select <em>%0%</em> objects, you want to link to <em>%1%</em>'] = 
 // file(s): public/js/ui/admin/AdminPage.js, public/js/ui/settings/SettingsPage.js, public/js/ui/settings/template/SettingsPage.html, public/js/ui/_include/widget/template/NavigationWidget.html
 $messages_en['Settings'] = '';
 // file(s): public/js/ui/login/template/LoginPage.html, public/js/ui/_include/widget/LoginDlgWidget.js
-$messages_en['Sign in'] = 'Registrarse';
+$messages_en['Sign in'] = '';
 // file(s): public/js/ui/data/widget/EntityListWidget.js
 $messages_en['Skipped rows'] = '';
 // file(s): src/model/_base/ChapterRDBMapper.php
@@ -520,7 +520,7 @@ $messages_en['User [Pl.]'] = 'Users';
 // file(s): src/model/wcmf/_base/UserConfigRDBMapper.php
 $messages_en['value'] = '';
 // file(s): public/js/ui/home/template/HomePage.html
-$messages_en['Welcome'] = 'Bienvenidos al Consultorio Dental SW';
+$messages_en['Welcome'] = '';
 // file(s): src/model/_base/BookRDBMapper.php
 $messages_en['year'] = '';
 // file(s): public/js/ui/_include/widget/template/LoginDlgWidget.html
@@ -531,15 +531,4 @@ $messages_en['_displayValue'] = 'object';
 $messages_en['_summary'] = 'summary';
 // file(s): public/js/ui/home/HistoryEntry.js, public/js/ui/home/HomePage.js, public/js/ui/search/SearchResult.js, public/js/ui/search/SearchResultPage.js
 $messages_en['_type'] = 'type';
-
-$messages_en['Paciente [Pl.]'] = 'Paciente';
-$messages_en['Doctor [Pl.]'] = 'Doctor';
-$messages_en['Tratamiento [Pl.]'] = 'Tratamiento';
-$messages_en['Consulta [Pl.]'] = 'Consulta';
-$messages_en['ci'] = 'carnet de identidad';
-$messages_en['fecha_nacimiento'] = 'fecha de nacimiento';
-$messages_en['nombre_tratamiento'] = 'tratamiento';
-$messages_en['ci_doctor'] = 'c.i. del doctor';
-$messages_en['ci_paciente'] = 'c.i. del paciente';
-$messages_en['fecha_inicio'] = 'fecha de inicio';
 ?>
