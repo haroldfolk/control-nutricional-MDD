@@ -1,6 +1,7 @@
 define( [
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/_base/config",
     "dojo/topic",
     "dijit/form/DateTextBox",
     "dojo/date/locale",
@@ -11,6 +12,7 @@ define( [
 function(
     declare,
     lang,
+    config,
     topic,
     DateTextBox,
     locale,
@@ -25,18 +27,13 @@ function(
         inputType: null, // control description as string as used in Factory.getControlClass()
         entity: null,
 
-        dateFormat: {selector: 'date', datePattern: 'yyyy-MM-dd', locale: appConfig.uiLanguage},
+        dateFormat: {selector: 'date', datePattern: 'yyyy-MM-dd', locale: config.app.uiLanguage},
 
         constructor: function(args) {
             declare.safeMixin(this, args);
 
             this.label = Dict.translate(this.name);
-            try {
-                this.value = locale.parse(this.value, this.dateFormat);
-            }
-            catch (e) {
-                console.log("Illegal date instance: "+this.value);
-            }
+            this.value = this.convertToDate(this.value);
         },
 
         postCreate: function() {
@@ -46,7 +43,7 @@ function(
                 topic.subscribe("entity-datachange", lang.hitch(this, function(data) {
                     if ((this.entity && this.entity.get('oid') === data.entity.get('oid')) &&
                             data.name === this.name) {
-                        this.set("value", locale.parse(data.newValue, this.dateFormat));
+                        this.set("value", this.convertToDate(data.newValue));
                     }
                 }))
             );
@@ -61,6 +58,11 @@ function(
                 };
             }
             return value;
+        },
+
+        convertToDate: function(value) {
+            return (typeof value === "string" || value instanceof String) ?
+                  locale.parse(value, this.dateFormat) : value;
         }
     });
 });

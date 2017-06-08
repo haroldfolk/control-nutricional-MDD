@@ -1,11 +1,21 @@
 define([
     "dojo/_base/declare",
     "dojo/_base/array",
-    "./Cookie"
+    "dojo/promise/all",
+    "dojo/Deferred",
+    "dojo/json",
+    "./Cookie",
+    "./action/GetUserConfig",
+    "./action/SetUserConfig"
 ], function (
     declare,
     array,
-    Cookie
+    all,
+    Deferred,
+    JSON,
+    Cookie,
+    GetUserConfig,
+    SetUserConfig
 ) {
     var User = declare(null, {
     });
@@ -33,6 +43,7 @@ define([
 
     /**
      * Check if the user has the given role
+     * @param name The role name
      * @return Boolean
      */
     User.hasRole = function(name) {
@@ -51,6 +62,49 @@ define([
         var user = Cookie.get("user");
         return user !== undefined;
     };
+
+    /**
+     * Initialize the user configuration
+     * @return Deferred
+     */
+    User.initializeConfig = function() {
+        var deferred = new Deferred();
+        var deferredList = {};
+        deferredList["gridConfig"] = new GetUserConfig({
+            key: "grid"
+        }).execute();
+        all(deferredList).then(function(results) {
+            User._config["grid"] = JSON.parse(results["gridConfig"].value, true);
+            deferred.resolve({});
+        }, function(error) {
+            deferred.reject(error);
+        });
+        return deferred;
+    };
+
+    /**
+     * Set a user configuration
+     * @param name The configuration name
+     * @param value The configuration value
+     */
+    User.setConfig = function(name, value) {
+        User._config[name] = value;
+        new SetUserConfig({
+            key: name,
+            value: JSON.stringify(value)
+        }).execute();
+    };
+
+    /**
+     * Get a user configuration
+     * @param name The configuration name
+     * @return Object
+     */
+    User.getConfig = function(name) {
+        return User._config[name];
+    };
+
+    User._config = {};
 
     return User;
 });

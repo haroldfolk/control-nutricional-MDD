@@ -1,5 +1,6 @@
 define([
     "dojo/_base/declare",
+    "dojo/_base/lang",
     "dojo/_base/array",
     "dojo/when",
     "./Model",
@@ -7,6 +8,7 @@ define([
     "../../ui/data/display/Renderer"
 ], function(
     declare,
+    lang,
     array,
     when,
     Model,
@@ -15,35 +17,53 @@ define([
 ) {
     var Node = declare(null, {
 
+        /**
+         * Attributes defined in subclasses
+         */
         typeName: '',
+        description: '',
         isSortable: false,
         displayValues: [],
+        pkNames: [],
+        relationOrder: [],
         attributes: [],
         relations: [],
+
+        /**
+         * Methods optionally implemented in subclasses
+         */
+        getSummary: null, // function(data) {}
+        getEntityRelations: null, // function(data) {}
+
+        allRelations: null,
         parentRelations: null,
         childRelations: null,
 
         /**
          * Get all relation definitions
-         * @param type Optional relation type, 'parent' or 'child'
+         * @param type Relation type, 'all', 'parent' or 'child'
+         * @param entity Entity to get the value for (optional)
          * @return Array
          */
-        getRelations: function(type) {
-            if (type === 'child' || type === 'parent') {
-              var varname = type+'Relations';
-              if (!this[varname]) {
+        getRelations: function(type, entity) {
+            var varname = type+'Relations';
+            if (!this[varname] || entity) {
+                var relations = (entity && typeof this.getEntityRelations === 'function') ?
+                    this.getEntityRelations(entity) : this.relations;
                 var rel = [];
-                for(var i=0, count=this.relations.length; i<count; i++) {
-                  var relation = this.relations[i];
-                  if (relation.relationType === type) {
-                    rel.push(relation);
-                  }
+                for(var i=0, count=relations.length; i<count; i++) {
+                    var relation = relations[i];
+                    if (type === 'all' || relation.relationType === type) {
+                        rel.push(relation);
+                    }
                 }
+                var sortingArr = this.relationOrder;
+                rel.sort(lang.hitch(this, function(a, b) {
+                    return sortingArr.indexOf(a.name) - sortingArr.indexOf(b.name);
+                }));
                 this[varname] = rel;
-              }
-              return this[varname];
             }
-            return this.relations;
+            return this[varname];
         },
 
         /**
@@ -96,14 +116,25 @@ define([
 
         /**
          * Get the attribute definitions
-         * @param tag Optional tag that the attributes should have
+         * @param filter Optional filter with properties:
+         *        - include: Array of tags to include
+         *        - exclude: Array of tags to exclude
          * @return Array
          */
-        getAttributes: function(tag) {
+        getAttributes: function(filter) {
             var result = [];
+            var include = filter ? filter.include : undefined;
+            var exclude = filter ? filter.exclude : undefined;
             for (var i=0, count=this.attributes.length; i<count; i++) {
                 var attribute = this.attributes[i];
-                if (!tag || array.indexOf(attribute.tags, tag) !== -1) {
+                var tags = attribute.tags;
+                var includeOk = !include || (tags && tags.filter(function(n) {
+                    return include.indexOf(n) !== -1;
+                }).length === include.length);
+                var excludeOk = !exclude || (!tags || tags.filter(function(n) {
+                    return exclude.indexOf(n) !== -1;
+                }).length === 0);
+                if (includeOk && excludeOk) {
                     result.push(attribute);
                 }
             }
@@ -141,13 +172,15 @@ define([
                 }
                 else {
                     var values = [];
+                    var renderOptions = { truncate: 20 };
                     for (var i=0; i<type.displayValues.length; i++) {
                         var curValue = type.displayValues[i];
                         var curAttribute = type.getAttribute(curValue);
-                        when(Renderer.render(entity[curValue], curAttribute), function(value) {
-                            if (value && (value).toString().length > 0) {
+                        when(Renderer.render(entity[curValue], curAttribute, renderOptions), function(value) {
+                            var length = value ? value.toString().length : 0;
+                            if (value && length > 0) {
                                 values.push(value);
-                        }
+                            }
                         });
                     }
                     result = values.join(" - ");

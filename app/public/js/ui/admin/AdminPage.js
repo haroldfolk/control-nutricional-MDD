@@ -35,42 +35,76 @@ define([
         contextRequire: require,
         title: Dict.translate('Settings'),
 
-        postCreate: function() {
-            this.inherited(arguments);
-        },
+        processes: {},
 
         _index: function(e) {
             // prevent the page from navigating after submit
             e.preventDefault();
-
-            var message = Dict.translate("The search index was successfully updated.");
-
-            this.indexBtn.setProcessing();
-            this.hideNotification();
-            new Index().execute().then(
-                lang.hitch(this, lang.partial(this.finishProcess, this.indexBtn, message)),
-                lang.hitch(this, lang.partial(this.errorHandler, this.indexBtn)),
-                lang.hitch(this, lang.partial(this.progressHandler, this.indexBtn))
-            );
+            this.handleProcessBtnClick('index', this.indexBtn, Index,
+                Dict.translate("The search index was successfully updated."));
         },
 
         _export: function(e) {
             // prevent the page from navigating after submit
             e.preventDefault();
-
-            var message = Dict.translate("The content was successfully exported.");
-
-            this.exportBtn.setProcessing();
-            this.hideNotification();
-            new ExportXML().execute().then(
-                lang.hitch(this, lang.partial(this.finishProcess, this.exportBtn, message)),
-                lang.hitch(this, lang.partial(this.errorHandler, this.exportBtn)),
-                lang.hitch(this, lang.partial(this.progressHandler, this.exportBtn))
-            );
+            this.handleProcessBtnClick('export', this.exportBtn, ExportXML,
+                Dict.translate("The content was successfully exported."));
         },
 
-        finishProcess: function(btn, message) {
+        handleProcessBtnClick: function(name, btn, action, successMessage) {
+            this.hideNotification();
+
+            btn.setCancelable(true);
+            var process = this.processes[name];
+            if (!process || process.isFulfilled()) {
+                process = new action().execute();
+                process.then(
+                    lang.hitch(this, lang.partial(this.finishProcess, process, btn,
+                        successMessage)),
+                    lang.hitch(this, lang.partial(this.errorHandler, process, btn)),
+                    lang.hitch(this, lang.partial(this.progressHandler, process, btn))
+                );
+                btn.setProcessing();
+                this.processes[name] = process;
+                this.waitFor(process);
+            }
+            else {
+                process.cancel(Dict.translate("The <em>%0%</em> process is aborted.", [name]));
+            }
+        },
+
+        finishProcess: function(process, btn, message) {
             btn.reset();
+            this.showResult(process, btn, message);
+        },
+
+        errorHandler: function(process, btn, error) {
+            btn.reset();
+            if (process.isCanceled()) {
+                this.showResult(process, btn, error);
+            }
+            else {
+                this.showBackendError(error);
+            }
+        },
+
+        progressHandler: function(process, btn, data) {
+            // set button progress
+            var progress = data.stepNumber/data.numberOfSteps;
+            btn.setProgress(progress);
+
+            // add status line
+            var id = "status_"+btn.id;
+            var processStatusNode = dom.byId(id);
+            if (processStatusNode) {
+                domConstruct.destroy(processStatusNode);
+            }
+            processStatusNode = domConstruct.toDom('<li id="'+id+'" class="list-group-item"><span class="badge">'+btn.initialLabel+'</span> <em>'+data.stepName+'</em></li>');
+            domConstruct.place(processStatusNode, this.statusNode);
+
+        },
+
+        showResult: function(process, btn, message) {
             this.showNotification({
                 type: "ok",
                 message: message,
@@ -83,22 +117,6 @@ define([
                     }
                 })
             });
-        },
-
-        errorHandler: function(btn, error) {
-            btn.reset();
-            this.showBackendError(error);
-        },
-
-        progressHandler: function(btn, data) {
-            var id = "status_"+btn.id;
-            var processStatusNode = dom.byId(id);
-            if (processStatusNode) {
-                domConstruct.destroy(processStatusNode);
-            }
-            processStatusNode = domConstruct.toDom('<li id="'+id+'" class="list-group-item"><span class="badge">'+btn.initialLabel+'</span> <em>'+data.stepName+'</em></li>');
-            domConstruct.place(processStatusNode, this.statusNode);
-
         }
     });
 });

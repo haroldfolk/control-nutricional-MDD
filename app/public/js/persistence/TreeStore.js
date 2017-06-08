@@ -1,26 +1,37 @@
 define([
     "dojo/_base/declare",
+    "dojo/_base/config",
     "dojo/aspect",
     "dojo/when",
     "dojo/topic",
     "dojo/store/JsonRest",
-    "dojo/store/util/QueryResults"
+    "dojo/store/util/QueryResults",
+    "../AuthToken"
 ], function (
     declare,
+    config,
     aspect,
     when,
     topic,
     JsonRest,
-    QueryResults
+    QueryResults,
+    AuthToken
 ) {
     var TreeStore = declare([JsonRest], {
 
         idProperty: 'oid',
+        headers: {
+            Accept: "application/json"
+        },
 
         constructor: function(options) {
-            options.headers = {
-                Accept: "application/json"
-            };
+            declare.safeMixin(this, options);
+
+            // add auth token header if available
+            var authTokenValue = AuthToken.get();
+            if (authTokenValue !== undefined) {
+                this.headers[AuthToken.name] = authTokenValue;
+            }
 
             aspect.after(this, 'query', function(QueryResults) {
                 when(QueryResults, function() {}, function(error) {
@@ -80,14 +91,12 @@ define([
      */
     TreeStore.getStore = function(rootTypes) {
         if (!TreeStore.storeInstances[rootTypes]) {
-            var jsonRest = new TreeStore({
-                target: appConfig.backendUrl+"?action=browseTree&rootTypes=linkableTypes"
+            var store = new TreeStore({
+                target: config.app.backendUrl+"?action=browseTree&rootTypes=linkableTypes"
             });
-            TreeStore.storeInstances[rootTypes] = {
-                jsonRest: jsonRest
-            };
+            TreeStore.storeInstances[rootTypes] = store;
         }
-        return TreeStore.storeInstances[rootTypes].jsonRest;
+        return TreeStore.storeInstances[rootTypes];
     };
 
     return TreeStore;

@@ -1,7 +1,7 @@
 <?php
 /**
  * wCMF - wemove Content Management Framework
- * Copyright (C) 2005-2015 wemove digital solutions GmbH
+ * Copyright (C) 2005-2016 wemove digital solutions GmbH
  *
  * Licensed under the terms of the MIT License.
  *
@@ -32,7 +32,7 @@ LogManager::configure($logger);
 
 // setup configuration
 $configuration = new InifileConfiguration($configPath);
-$configuration->addConfiguration('config.ini');
+$configuration->addConfiguration('backend.ini');
 $configuration->addConfiguration('../../tools/database/config.ini');
 
 // setup object factory
@@ -153,7 +153,7 @@ function ensureDatabases() {
 }
 
 /**
- * Ensure the existance of the update table 'dbupdate'
+ * Ensure the existence of the update table 'dbupdate'
  * @param connection The database connection
  * @return True/False
  */

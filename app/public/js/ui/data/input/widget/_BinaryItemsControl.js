@@ -47,6 +47,10 @@ function(
         spinnerNode: null,
 
         constructor: function(args) {
+            // convert store from DstoreAdapter
+            if (args.store && args.store.store) {
+                args.store = args.store.store;
+            }
             declare.safeMixin(this, args);
 
             this.label = Dict.translate(this.name);
@@ -182,7 +186,8 @@ function(
 
         getValueArray: function(value) {
             value = this.multiValued ? ""+value : value;
-            return (typeof value === "string") ? value.split(",") : (value instanceof Array ? value : [value]);
+            return (typeof value === "string" || value instanceof String) ?
+                value.split(",") : (value instanceof Array ? value : [value]);
         }
     });
 });

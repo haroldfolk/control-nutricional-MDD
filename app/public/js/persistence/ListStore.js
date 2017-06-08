@@ -1,6 +1,7 @@
 define([
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/_base/config",
     "dojo/Deferred",
     "dojo/json",
     "dstore/Rest",
@@ -9,6 +10,7 @@ define([
 ], function (
     declare,
     lang,
+    config,
     Deferred,
     JSON,
     Rest,
@@ -20,13 +22,14 @@ define([
      * It expects an array of objects with properties 'oid', 'value' and
      * 'displayText' sent by the server.
      */
-    var ListStore = declare([Rest], {
+    var ListStore = declare([Rest, Cache], {
 
         listDef: '',
         language: '',
         target: '',
 
         idProperty: 'oid',
+        canCacheQuery: true,
 
         constructor: function(options) {
             declare.safeMixin(this, options);
@@ -40,7 +43,7 @@ define([
             }
 
             // set target for xhr requests
-            this.target = appConfig.pathPrefix+"list/"+this.language+"/"+base64.encode(b)+"/";
+            this.target = config.app.pathPrefix+"list/"+this.language+"/"+base64.encode(b)+"/";
         },
 
         get: function(id) {
@@ -80,19 +83,13 @@ define([
             ListStore.storeInstances[listDefStr] = {};
         }
         if (!ListStore.storeInstances[listDefStr][language]) {
-            var jsonRest = new ListStore({
+            var store = new ListStore({
                 listDef: listDef,
                 language: language
             });
-            var cache = Cache.create(jsonRest, {
-                canCacheQuery: true
-            });
-            ListStore.storeInstances[listDefStr][language] = {
-                jsonRest: jsonRest,
-                cache: cache
-            };
+            ListStore.storeInstances[listDefStr][language] = store;
         }
-        return ListStore.storeInstances[listDefStr][language].cache;
+        return ListStore.storeInstances[listDefStr][language];
     };
 
     return ListStore;

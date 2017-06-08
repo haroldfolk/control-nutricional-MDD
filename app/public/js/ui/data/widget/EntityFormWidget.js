@@ -2,6 +2,7 @@ define( [
     "require",
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/_base/config",
     "dojo/_base/array",
     "dojo/promise/all",
     "dojo/on",
@@ -30,6 +31,7 @@ define( [
     "../../../action/Delete",
     "../../../locale/Dictionary",
     "../input/Factory",
+    "../input/widget/TextBox",
     "./EntityRelationWidget",
     "./PermissionDlgWidget",
     "dojo/text!./template/EntityFormWidget.html"
@@ -38,6 +40,7 @@ function(
     require,
     declare,
     lang,
+    config,
     array,
     all,
     on,
@@ -66,6 +69,7 @@ function(
     Delete,
     Dict,
     ControlFactory,
+    TextBox,
     EntityRelationWidget,
     PermissionDlg,
     template
@@ -94,7 +98,7 @@ function(
         isLockOwner: true,
         permissions: {},
 
-        language: appConfig.defaultLanguage,
+        language: config.app.defaultLanguage,
         isTranslation: false,
         original: null, // untranslated entity
 
@@ -111,11 +115,11 @@ function(
             this.typeClass = Model.getType(this.type);
             this.formId = "entityForm_"+oid;
             this.fieldContainerId = "fieldContainer_"+oid;
-            this.headline = this.typeClass.getDisplayValue(this.entity);
+            this.headline = this.getHeadline();
             this.isNew = Model.isDummyOid(oid);
-            this.isTranslation = this.language !== appConfig.defaultLanguage;
+            this.isTranslation = this.language !== config.app.defaultLanguage;
 
-            this.languageName = appConfig.languages[this.language];
+            this.languageName = config.app.languages[this.language];
         },
 
         _setHeadlineAttr: function (val) {
@@ -133,6 +137,7 @@ function(
             deferredList.push(ControlFactory.loadControlClasses(this.type));
             // check instance permissions
             var requiredPermissions = [
+                cleanOid+'??create',
                 cleanOid+'??update',
                 cleanOid+'??delete',
                 '??setPermissions'
@@ -179,18 +184,20 @@ function(
                             if (!disabled && this.isTranslation && array.indexOf(attribute.tags, 'TRANSLATABLE') === -1) {
                                 disabled = true;
                             }
-                            var controlClass = controls[attribute.inputType];
+                            var controlClass = controls[attribute.inputType] || TextBox;
                             var attributeWidget = new controlClass({
                                 name: attribute.name,
-                                'class': attribute.tags.join(' ').toLowerCase(),
+                                'class': attribute.tags ? attribute.tags.join(' ').toLowerCase() : '',
                                 value: this.entity[attribute.name],
                                 disabled: disabled,
                                 helpText: Dict.translate(attribute.description),
                                 inputType: attribute.inputType,
                                 entity: this.entity
                             });
-                            if (this.permissions[cleanOid+'??update'] === true &&
-                                    this.permissions[cleanOid+'.'+attribute.name+'??update'] === true) {
+                            var canCreate = this.permissions[cleanOid+'??create'] === true;
+                            var canUpdate = this.permissions[cleanOid+'??update'] === true &&
+                                    this.permissions[cleanOid+'.'+attribute.name+'??update'] === true;
+                            if ((this.isNew && canCreate || !this.isNew && canUpdate)) {
                                 this.own(attributeWidget.on('change', lang.hitch(this, function(widget) {
                                     var widgetValue = widget.get("value");
                                     var entityValue = this.entity.get(widget.name);
@@ -263,11 +270,13 @@ function(
                 on(dojo.body(), "keydown", lang.hitch(this, function (e) {
                     if (e.keyCode === 83 && (e.ctrlKey || e.metaKey)) {
                         e.stopPropagation();
-                        this.showNotification({
-                            type: "process",
-                            message: Dict.translate("Saving data")
-                        });
-                        this._save(e, true);
+                        if (this.isModified) {
+                            this.showNotification({
+                                type: "process",
+                                message: Dict.translate("Saving data")
+                            });
+                            this._save(e, true);
+                        }
                         return false;
                     };
                 }))
@@ -290,7 +299,7 @@ function(
          */
         getAttributes: function() {
             var typeClass = Model.getType(this.type);
-            return typeClass.getAttributes('DATATYPE_ATTRIBUTE');
+            return typeClass.getAttributes({exclude: ['DATATYPE_IGNORE']});
         },
 
         /**
@@ -300,8 +309,7 @@ function(
          * an array of the group's attributes as value
          */
         getAttributeGroups: function() {
-            var typeClass = Model.getType(this.type);
-            var attributes = typeClass.getAttributes('DATATYPE_ATTRIBUTE');
+            var attributes = this.getAttributes();
             var groups = {
                 'default': []
             };
@@ -328,7 +336,11 @@ function(
          */
         getRelations: function() {
             var typeClass = Model.getType(this.type);
-            return typeClass.getRelations();
+            return typeClass.getRelations('all', this.entity);
+        },
+
+        getHeadline: function() {
+          return Dict.translate(Model.getSimpleTypeName(this.type))+" <em>"+this.typeClass.getDisplayValue(this.entity)+"</em>";
         },
 
         buildLanguageMenu: function() {
@@ -338,13 +350,13 @@ function(
             var languageCount = 0;
             var menu = registry.byId(this.languageMenuPopupNode.get("id"));
             var form = this;
-            for (var langKey in appConfig.languages) {
+            for (var langKey in config.app.languages) {
                 var menuItem = new MenuItem({
-                    label: appConfig.languages[langKey],
+                    label: config.app.languages[langKey],
                     langKey: langKey,
                     onClick: function() {
                         var route = form.page.getRoute("entity");
-                        var queryParams = this.langKey !== appConfig.defaultLanguage ? {lang: this.langKey} : undefined;
+                        var queryParams = this.langKey !== config.app.defaultLanguage ? {lang: this.langKey} : undefined;
                         var url = route.assemble({
                             type: Model.getSimpleTypeName(form.type),
                             id: Model.getIdFromOid(form.entity.get('oid'))
@@ -549,7 +561,7 @@ function(
                                 }
                             })
                         });
-                        this.set("headline", this.typeClass.getDisplayValue(this.entity));
+                        this.set("headline", this.getHeadline());
                         this.setModified(false);
                         this.acquireLock();
                     }

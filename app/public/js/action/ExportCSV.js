@@ -1,13 +1,9 @@
 define([
     "dojo/_base/declare",
-    "dojo/_base/lang",
-    "dojo/io-query",
     "./Process",
     "./ActionBase"
 ], function (
     declare,
-    lang,
-    ioQuery,
     Process,
     ActionBase
 ) {
@@ -16,19 +12,15 @@ define([
         name: 'exportCSV',
         iconClass: 'fa fa-file-excel-o',
 
-        deferred: null,
-
         // action parameters
         type: null,
-        filter: null,
+        query: null,
 
         execute: function() {
             var params = {
-                className: this.type
+                className: this.type,
+                query: this.query
             };
-            if (this.filter) {
-                lang.mixin(params, ioQuery.queryToObject(this.filter));
-            }
             return new Process('exportCSV').run(params);
         }
     });

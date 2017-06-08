@@ -1,7 +1,7 @@
 <?php
 /**
  * wCMF - wemove Content Management Framework
- * Copyright (C) 2005-2015 wemove digital solutions GmbH
+ * Copyright (C) 2005-2016 wemove digital solutions GmbH
  *
  * Licensed under the terms of the MIT License.
  *
@@ -19,7 +19,6 @@ use wcmf\lib\core\impl\MonologFileLogger;
 use wcmf\lib\core\LogManager;
 use wcmf\lib\core\ObjectFactory;
 use wcmf\lib\io\FileUtil;
-use wcmf\lib\persistence\BuildDepth;
 use wcmf\lib\security\principal\impl\DefaultPrincipalFactory;
 use wcmf\lib\util\DBUtil;
 
@@ -33,7 +32,7 @@ LogManager::configure($logger);
 
 // setup configuration
 $configuration = new InifileConfiguration($configPath);
-$configuration->addConfiguration('config.ini');
+$configuration->addConfiguration('backend.ini');
 $configuration->addConfiguration('../../tools/database/config.ini');
 
 // setup object factory
@@ -77,6 +76,8 @@ try {
       $adminUser = $persistenceFacade->create($userType);
       $adminUser->setLogin("admin");
       $adminUser->setPassword("admin");
+      $adminUser->setIsActive(1);
+      $adminUser->setIsSuperUser(1);
       if (in_array("admin.ini", $configuration->getConfigurations())) {
         $adminUser->setConfig("admin.ini");
       }

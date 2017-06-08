@@ -2,10 +2,11 @@ define([
     "require",
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/_base/config",
     "dojo/dom",
-    "dojo/query",
+    "dojo/dom-geometry",
     "dojo/topic",
-    "dojo/_base/window",
+    "dojo/window",
     "dijit/registry",
     "../_include/_PageMixin",
     "../_include/_NotificationMixin",
@@ -21,8 +22,9 @@ define([
     require,
     declare,
     lang,
+    config,
     dom,
-    query,
+    domGeom,
     topic,
     win,
     registry,
@@ -48,7 +50,7 @@ define([
             // tab navigation
             registry.byId("tabContainer").watch("selectedChildWidget", lang.hitch(this, function(name, oval, nval){
                 if (nval.id === "mediaTab") {
-                    window.location.assign(appConfig.pathPrefix+'media?'+this.request.getQueryString());
+                    window.location.assign(config.app.pathPrefix+'media?'+this.request.getQueryString());
                 }
             }));
 
@@ -71,6 +73,7 @@ define([
             }));
             tree.placeAt(dom.byId('resourcetree'));
             tree.startup();
+            domGeom.setContentSize(tree.domNode, { h: win.getBox().h-40 });
         },
 
         onItemClick: function(item) {
@@ -78,28 +81,37 @@ define([
                 return;
             }
             var funcNum = this.request.getQueryParam('CKEditorFuncNum');
+            var cleanupFuncNum = this.request.getQueryParam('CKEditorCleanUpFuncNum');
             var callback = this.request.getQueryParam('callback');
+            var isWindow = window.opener;
 
             var value = 'link://'+this.getItemUrl(item);
-            if (window.opener.CKEDITOR && funcNum) {
-                window.opener.CKEDITOR.tools.callFunction(funcNum, value, function() {
+            var ckeditor = isWindow ? window.opener.CKEDITOR : parent.CKEDITOR;
+            if (ckeditor && funcNum) {
+                ckeditor.tools.callFunction(funcNum, value, function() {
                     // callback executed in the scope of the button that called the file browser
                     // see: http://docs.ckeditor.com/#!/guide/dev_file_browser_api Example 4
                     //
-                    // set the protocoll to 'other'
+                    // set the protocol to 'other'
                     // see: http://ckeditor.com/forums/CKEditor-3.x/Tutorial-how-modify-Links-Plugin-link-cms-pages
                     var dialog = this.getDialog();
                     if (dialog.getName() === 'link') {
                         dialog.setValueOf('info', 'protocol', '');
                     }
                 });
-            }
-            else if (callback) {
-                if (window.opener[callback]) {
-                    window.opener[callback](value);
+                if (!isWindow && cleanupFuncNum) {
+                    ckeditor.tools.callFunction(cleanupFuncNum);
                 }
             }
-            window.close();
+            else if (callback) {
+                var cb = isWindow ? window.opener[callback] : parent[callback];
+                if (typeof cb === 'function') {
+                    cb(value);
+                }
+            }
+            if (isWindow) {
+                window.close();
+            }
         },
 
         getItemUrl: function(item) {

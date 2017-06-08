@@ -9,13 +9,15 @@
  *
  * Look to `util/build/buildControlDefault.js` for more information on available options and their default values.
  *
- * See: http://dojotoolkit.org/reference-guide/1.9/build/buildSystem.html
+ * See: http://dojotoolkit.org/reference-guide/1.10/build/buildSystem.html
  */
 var appSrc = [
     "app/js/App",
+    "app/js/AuthToken",
     "app/js/Cookie",
     "app/js/Startup",
     "app/js/User",
+    "app/js/Xhr",
     "app/js/routing-map",
     "app/js/action/ActionBase",
     "app/js/action/ChangePassword",
@@ -41,7 +43,6 @@ var appSrc = [
     "app/js/action/Unlink",
     "app/js/action/Unlock",
     "app/js/locale/Dictionary",
-    "app/js/model/_TypeList",
     "app/js/model/meta/Model",
     "app/js/model/meta/Node",
     "app/js/persistence/BackendError",
@@ -61,11 +62,14 @@ var appSrc = [
     "app/js/ui/_include/widget/ConfirmDlgWidget",
     "app/js/ui/_include/widget/GridWidget",
     "app/js/ui/_include/widget/LoginDlgWidget",
+    "app/js/ui/_include/widget/MediaBrowserDlgWidget",
     "app/js/ui/_include/widget/NavigationWidget",
     "app/js/ui/_include/widget/NotificationWidget",
     "app/js/ui/_include/widget/ObjectSelectDlgWidget",
     "app/js/ui/_include/widget/PopupDlgWidget",
     "app/js/ui/admin/AdminPage",
+    "app/js/ui/admin/LockListPage",
+    "app/js/ui/admin/LockPage",
     "app/js/ui/admin/PermissionListPage",
     "app/js/ui/admin/PermissionPage",
     "app/js/ui/admin/PrincipalListPage",
@@ -80,6 +84,9 @@ var appSrc = [
     "app/js/ui/data/display/renderer/Date",
     "app/js/ui/data/display/renderer/Image",
     "app/js/ui/data/display/renderer/Text",
+    "app/js/ui/data/filter/widget/SelectBox",
+    "app/js/ui/data/filter/widget/TextBox",
+    "app/js/ui/data/filter/widget/_FilterWidgetMixin",
     "app/js/ui/data/input/Factory",
     "app/js/ui/data/input/widget/BinaryCheckBox",
     "app/js/ui/data/input/widget/CKEditor",
@@ -114,6 +121,9 @@ var appSrc = [
     "app/js/ui/search/SearchResult",
     "app/js/ui/search/SearchResultPage",
     "app/js/ui/settings/SettingsPage",
+
+    "app/js/config/custom_routes",
+    "app/js/config/types",
 
     "dgrid/util/touch"
 ];

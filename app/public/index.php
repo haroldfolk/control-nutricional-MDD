@@ -1,7 +1,7 @@
 <?php
 /**
  * wCMF - wemove Content Management Framework
- * Copyright (C) 2005-2015 wemove digital solutions GmbH
+ * Copyright (C) 2005-2017 wemove digital solutions GmbH
  *
  * Licensed under the terms of the MIT License.
  *
@@ -33,7 +33,7 @@ LogManager::configure($logger);
 
 // setup configuration
 $configuration = new InifileConfiguration($configPath);
-$configuration->addConfiguration('config.ini');
+$configuration->addConfiguration('backend.ini');
 
 // setup object factory
 ObjectFactory::configure(new DefaultFactory($configuration));

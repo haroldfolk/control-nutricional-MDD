@@ -15,9 +15,9 @@
                 <li class="main-menu push" id="navHome" data-wcmf-route="home">
                     <a href="#">{translate:Home}</a>
                 </li>
-                <!--<li class="main-menu push" id="navMedia" data-dojo-attach-event="onClick:_navigateMedia">
+                <li class="main-menu push" id="navMedia" data-dojo-attach-event="onClick:_navigateMedia">
                     <a href="#">{translate:Media Pool}</a>
-                </li>-->
+                </li>
                 <li class="main-menu push dropdown" id="navContent">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
                         {translate:Content} <b class="caret"></b>
@@ -38,6 +38,9 @@
                         </li>
                         <li class="push" data-wcmf-route="permissionList" data-wcmf-pathparams="type:'${permissionType}'">
                             <a href="#"><i class="fa fa-shield"></i> {translate:Permissions}</a>
+                        </li>
+                        <li class="push" data-wcmf-route="lockList" data-wcmf-pathparams="type:'${lockType}'">
+                            <a href="#"><i class="fa fa-lock"></i> {translate:Locks}</a>
                         </li>
                     </ul>
                 </li>

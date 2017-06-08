@@ -2,17 +2,24 @@ define( [
     "require",
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/_base/config",
     "dojo/promise/all",
+    "dojo/on",
     "dojo/topic",
+    "dojo/dom-class",
+    "dojo/dom-construct",
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
     "dijit/_WidgetsInTemplateMixin",
     "../../_include/_NotificationMixin",
     "../../_include/widget/GridWidget",
     "../../_include/widget/Button",
+    "../../_include/widget/PopupDlgWidget",
+    "../../_include/widget/ConfirmDlgWidget",
     "../../../action/CheckPermissions",
     "../../../model/meta/Model",
     "../../../persistence/Store",
+    "../../../action/ImportCSV",
     "../../../action/ExportCSV",
     "../../../action/Create",
     "../../../action/Edit",
@@ -26,17 +33,24 @@ function(
     require,
     declare,
     lang,
+    config,
     all,
+    on,
     topic,
+    domClass,
+    domConstruct,
     _WidgetBase,
     _TemplatedMixin,
     _WidgetsInTemplateMixin,
     _Notification,
     GridWidget,
     Button,
+    PopupDlg,
+    ConfirmDlg,
     CheckPermissions,
     Model,
     Store,
+    ImportCSV,
     ExportCSV,
     Create,
     Edit,
@@ -84,7 +98,9 @@ function(
                 this.type+'??create',
                 this.type+'??copy',
                 this.type+'??delete',
-                '??setPermissions'
+                '??setPermissions',
+                this.type+'??exportCSV',
+                this.type+'??importCSV'
             ];
             deferredList.push(new CheckPermissions({
                 operations: requiredPermissions
@@ -104,8 +120,11 @@ function(
                     rowEnhancer: this.getRowEnhancer()
                 }, this.gridNode);
                 this.gridWidget.startup();
+                domClass.add(this.gridWidget.gridNode, "type-"+Model.getSimpleTypeName(this.type).toLowerCase());
 
                 this.createBtn.set("disabled", this.permissions[this.type+'??create'] !== true);
+                this.importBtn.set("disabled", this.permissions[this.type+'??importCSV'] !== true);
+                this.exportBtn.set("disabled", this.permissions[this.type+'??exportCSV'] !== true);
 
                 // notify listeners
                 topic.publish("entity-list-widget-created", this);
@@ -211,7 +230,10 @@ function(
 
         getGridColumns: function() {
             var typeClass = Model.getType(this.type);
-            return typeClass.displayValues;
+            var columns = typeClass.getAttributes({exclude: ['DATATYPE_IGNORE']}).map(function(attribute) {
+                return attribute.name;
+            });
+            return columns;
         },
 
         /**
@@ -225,33 +247,98 @@ function(
         },
 
         getGridFilter: function() {
+            var store = Store.getStore(this.type, config.app.defaultLanguage);
+            var gridFilter = this.gridWidget ? this.gridWidget.getFilter() : undefined;
+
             // check if the type might have parents of the same type,
             // and set the filter to retrieve only root nodes, if yes
-            var filter = {};
             var simpleType = Model.getSimpleTypeName(this.type);
             var relations = this.typeClass.getRelations('parent');
             for (var i=0, count=relations.length; i<count; i++) {
                 var relation = relations[i];
                 if (relation.type === simpleType) {
-                    filter[this.type+'.'+relation.fkName] = null;
+                    var filter = new store.Filter().eq(simpleType+'.'+relation.fkName, null);
+                    if (gridFilter) {
+                        gridFilter = store.Filter().and(gridFilter, filter);
+                    }
+                    else {
+                        gridFilter = filter;
+                    }
                 }
             }
-            return filter;
+            return gridFilter;
         },
 
         getGridStore: function() {
-            var store = Store.getStore(this.type, appConfig.defaultLanguage);
-            return store.filter(this.getGridFilter());
+            var store = Store.getStore(this.type, config.app.defaultLanguage);
+            var filter = this.getGridFilter();
+            return filter ? store.filter(filter) : store;
+        },
+
+        _import: function(e) {
+            // prevent the page from navigating after submit
+            e.preventDefault();
+
+            var fileSelect = domConstruct.create("input", {
+                type: "file",
+                style: {
+                    display: "none"
+                }
+            }, this.fileSelect);
+            on.once(fileSelect, "change", lang.hitch(this, function() {
+                new ConfirmDlg({
+                     title: Dict.translate("Confirm Import"),
+                     message: Dict.translate("Do you really want to import <em>%0%</em> ?", [fileSelect.files[0].name]),
+                     okCallback: lang.hitch(this, function() {
+                          this.importBtn.setProcessing();
+                          new ImportCSV({
+                              type: this.type,
+                              file: fileSelect.files[0]
+                          }).execute().then(
+                              lang.hitch(this, function(result) {
+                                  this.importBtn.reset();
+                                  var stats = result.stats;
+                                  new PopupDlg({
+                                      title: Dict.translate("Import result"),
+                                      message: Dict.translate("The import process finished with the following result")+":<br>"+
+                                          "<br><strong>"+Dict.translate("Processed rows")+":</strong> "+stats.processed+
+                                          "<br><strong>"+Dict.translate("Skipped rows")+":</strong> "+stats.skipped+
+                                          "<br>"+
+                                          "<br><strong>"+Dict.translate("Updated objects")+":</strong> "+stats.updated+
+                                          "<br><strong>"+Dict.translate("Inserted objects")+":</strong> "+stats.created,
+                                      okCallback: function() {},
+                                      cancelCallback: null
+                                  }).show();
+                                  this.gridWidget.refresh();
+                              }),
+                              lang.hitch(this, function(error) {
+                                  this.showBackendError(error);
+                                  this.importBtn.reset();
+                              }),
+                              lang.hitch(this, function(status) {
+                                  var progress = status.stepNumber/status.numberOfSteps;
+                                  this.importBtn.setProgress(progress);
+                              })
+                          );
+                          domConstruct.destroy(fileSelect);
+                     })
+                }).show();
+            }));
+            fileSelect.click();
         },
 
         _export: function(e) {
             // prevent the page from navigating after submit
             e.preventDefault();
 
+            // get filter query
+            var gridFilter = this.getGridFilter();
+            var query = gridFilter ? this.getGridStore()._renderFilterParams(gridFilter)[0] : null;
+
             this.exportBtn.setProcessing();
             new ExportCSV({
                 type: this.type,
-                filter: this.getGridStore()._renderFilterParams(this.getGridFilter())[0]
+                query: query
             }).execute().then(
                 lang.hitch(this, function() {
                     this.exportBtn.reset();
@@ -259,6 +346,10 @@ function(
                 lang.hitch(this, function(error) {
                     this.showBackendError(error);
                     this.exportBtn.reset();
+                }),
+                lang.hitch(this, function(status) {
+                    var progress = status.stepNumber/status.numberOfSteps;
+                    this.exportBtn.setProgress(progress);
                 })
             );
         },

@@ -4,15 +4,18 @@ define([
     "require",
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/_base/config",
+    "dojo/window",
     "dijit/registry",
     "../_include/_PageMixin",
     "jquery/jquery.min",
     "jquery-ui/jquery-ui.min",
     "../../config/elfinder_config",
     "elfinder/js/elfinder.full",
-    "elfinder/js/i18n/elfinder.de",
+    //"elfinder/js/i18n/elfinder.de",
     "dijit/layout/TabContainer",
     "dijit/layout/ContentPane",
+    "../../AuthToken",
     "../../locale/Dictionary",
     "dojo/text!./template/BrowsePage.html",
     "dojo/domReady!"
@@ -20,15 +23,18 @@ define([
     require,
     declare,
     lang,
+    config,
+    win,
     registry,
     _Page,
     jQuery,
     jQueryUi,
     elFinderConfig,
     elFinder,
-    i18n_elfinderDe,
+    //i18n_elfinderDe,
     TabContainer,
     ContentPane,
+    AuthToken,
     Dict,
     template
 ) {
@@ -38,12 +44,14 @@ define([
         contextRequire: require,
         title: Dict.translate('Media'),
 
+        elfinderInstance: null,
+
         constructor: function(params) {
             declare.safeMixin(this, params);
             // get package locations
             var packageLocations = {};
-            for(var i=0, count=dojoConfig.packages.length; i<count; i++) {
-                var curPackage = dojoConfig.packages[i];
+            for(var i=0, count=config.packages.length; i<count; i++) {
+                var curPackage = config.packages[i];
                 packageLocations[curPackage.name] = curPackage.location;
             }
             // add elfinder css
@@ -58,48 +66,62 @@ define([
             // tab navigation
             registry.byId("tabContainer").watch("selectedChildWidget", lang.hitch(this, function(name, oval, nval){
                 if (nval.id === "contentTab") {
-                    window.location.assign(appConfig.pathPrefix+'link?'+this.request.getQueryString());
+                    window.location.assign(config.app.pathPrefix+'link?'+this.request.getQueryString());
                 }
             }));
 
             var directory = this.request.getQueryParam("directory");
+            var customHeaders = {};
+            customHeaders[AuthToken.name] = AuthToken.get();
             lang.mixin(elfinderConfig, {
-                lang: appConfig.uiLanguage,
-                url: appConfig.backendUrl+'media/files?directory='+directory,
+                lang: config.app.uiLanguage,
+                url: config.app.backendUrl+'media/files?directory='+directory,
                 rememberLastDir: true,
                 resizable: false,
+                width: '100%',
+                height: win.getBox().h - 40,
                 getFileCallback: lang.hitch(this, function(file) {
                     this.onItemClick(file);
-                })
+                }),
+                customHeaders: customHeaders
             });
 
             setTimeout(function() {
-                $("#elfinder").elfinder(elfinderConfig).elfinder('instance');
+                this.elfinderInstance = $("#elfinder").elfinder(elfinderConfig).elfinder('instance');
             }, 500);
         },
 
         onItemClick: function(item) {
             var funcNum = this.request.getQueryParam('CKEditorFuncNum');
+            var cleanupFuncNum = this.request.getQueryParam('CKEditorCleanUpFuncNum');
             var callback = this.request.getQueryParam('callback');
+            var isWindow = window.opener;
 
             var value = this.getItemUrl(item);
-            if (window.opener.CKEDITOR && funcNum) {
-                window.opener.CKEDITOR.tools.callFunction(funcNum, value, function() {
+            var ckeditor = isWindow ? window.opener.CKEDITOR : parent.CKEDITOR;
+            if (ckeditor && funcNum) {
+                ckeditor.tools.callFunction(funcNum, value, function() {
                     // callback executed in the scope of the button that called the file browser
                     // see: http://docs.ckeditor.com/#!/guide/dev_file_browser_api Example 4
                 });
-            }
-            else if (callback) {
-                if (window.opener[callback]) {
-                    window.opener[callback](value);
+                if (!isWindow && cleanupFuncNum) {
+                    ckeditor.tools.callFunction(cleanupFuncNum);
                 }
             }
-            window.close();
+            else if (callback) {
+                var cb = isWindow ? window.opener[callback] : parent[callback];
+                if (typeof cb === 'function') {
+                    cb(value);
+                }
+            }
+            if (isWindow) {
+                window.close();
+            }
         },
 
         getItemUrl: function(item) {
             item = decodeURIComponent(item.url);
-            return appConfig.mediaSavePath+item.replace(appConfig.mediaBaseUrl, '');
+            return config.app.mediaSavePath+item.replace(config.app.mediaBaseUrl, '');
         }
     });
 });

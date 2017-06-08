@@ -14,7 +14,7 @@ define([
     var SearchResult = declare([Node
     ], {
         typeName: "SearchResult",
-        description: "?",
+        description: "",
         isSortable: false,
         displayValues: [
             "_displayValue", "_summary", "_type"
@@ -37,7 +37,7 @@ define([
         }, {
             name: "_displayValue",
             type: "String",
-            description: "?",
+            description: "",
             isEditable: false,
             inputType: 'text',
             displayType: 'text',
@@ -48,7 +48,7 @@ define([
         }, {
             name: "_summary",
             type: "String",
-            description: "?",
+            description: "",
             isEditable: false,
             inputType: 'text',
             displayType: 'text',
@@ -75,7 +75,7 @@ define([
         , detailView: '../data/widget/EntityFormWidget'
         , getSummary: function(data) {
             var typeClass = Model.getType(data['_type']);
-            if (typeClass.getSummary instanceof Function) {
+            if (typeof typeClass.getSummary === 'function') {
                 return typeClass.getSummary(data);
             }
             return '';

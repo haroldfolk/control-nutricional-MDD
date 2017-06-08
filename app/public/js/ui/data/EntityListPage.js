@@ -2,6 +2,7 @@ define([
     "require",
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/_base/config",
     "dojo/ready",
     "dojo/topic",
     "../_include/_PageMixin",
@@ -15,6 +16,7 @@ define([
     require,
     declare,
     lang,
+    config,
     ready,
     topic,
     _Page,
@@ -32,9 +34,9 @@ define([
         title: Dict.translate('Content'),
 
         baseRoute: "entity",
-        types: appConfig.rootTypes,
+        types: config.app.rootTypes,
         type: null,
-        hasTree: true,
+        hasTree: false,
 
         constructor: function(params) {
             // allow to override type parameter by request
@@ -55,7 +57,7 @@ define([
         buildForm: function() {
             var typeClass = Model.getType(this.type);
             require([typeClass.listView || './widget/EntityListWidget'], lang.hitch(this, function(View) {
-                if (View instanceof Function) {
+                if (typeof View === 'function') {
                     // create the tab panel
                     var panel = new View({
                         type: this.type,

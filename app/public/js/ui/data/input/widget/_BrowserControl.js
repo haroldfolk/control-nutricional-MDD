@@ -1,6 +1,7 @@
 define( [
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/_base/config",
     "dojo/topic",
     "dojo/on",
     "dojo/dom-construct",
@@ -9,12 +10,15 @@ define( [
     "../../../_include/widget/Button",
     "dijit/layout/ContentPane",
     "../../../_include/_HelpMixin",
+    "../../../_include/widget/MediaBrowserDlgWidget",
     "./_AttributeWidgetMixin",
+    "../../../../model/meta/Model",
     "../../../../locale/Dictionary"
 ],
 function(
     declare,
     lang,
+    config,
     topic,
     on,
     domConstruct,
@@ -23,7 +27,9 @@ function(
     Button,
     ContentPane,
     _HelpMixin,
+    MediaBrowserDlg,
     _AttributeWidgetMixin,
+    Model,
     Dict
 ) {
     return declare([ContentPane, _HelpMixin, _AttributeWidgetMixin], {
@@ -35,6 +41,7 @@ function(
         browserUrl: null,
         textbox: null,
         browseBtn: null,
+        browseDlg: null,
         downloadBtn: null,
         listenToWidgetChanges: true,
 
@@ -59,9 +66,10 @@ function(
 
             // create callback
             this.callbackName = "field_cb_"+this.textbox.id;
-            window[this.callbackName] = lang.hitch(this.textbox, function(value) {
-                this.set("value", value);
-            });
+            window[this.callbackName] = lang.hitch(this, lang.partial(function(textbox, value) {
+                textbox.set("value", value);
+                this.browseDlg.hide();
+            }), this.textbox);
 
             // create button / child
             if (this.browserUrl) {
@@ -70,7 +78,11 @@ function(
                     innerHTML: '<i class="fa fa-folder-open"></i>',
                     "class": "btn-mini",
                     onClick: lang.hitch(this, function() {
-                        window.open(this.browserUrl+'?callback='+this.callbackName+"&directory="+this.getDirectory(), '_blank', 'width=800,height=700');
+                        this.browseDlg = new MediaBrowserDlg({
+                            url: this.browserUrl+'?callback='+
+                                    this.callbackName+"&directory="+this.getDirectory()
+                        });
+                        this.browseDlg.show();
                     })
                 });
                 this.addChild(this.browseBtn);
@@ -102,16 +114,22 @@ function(
 
         isFile: function() {
             var value = this.get("value");
-            return value && value.indexOf(appConfig.mediaSavePath) === 0;
+            return value && value.indexOf(config.app.mediaSavePath) === 0;
         },
 
         getFile: function() {
             var value = this.get("value");
             // replace base path
-            return this.isFile() ? value.replace(appConfig.mediaSavePath, appConfig.mediaBasePath) : '';
+            return this.isFile() ? value.replace(config.app.mediaSavePath, config.app.mediaBasePath) : '';
         },
 
         getDirectory: function() {
+            if (this.entity) {
+                var typeClass = Model.getTypeFromOid(this.entity.oid);
+                if (typeClass.getUploadDirectory instanceof Function) {
+                    return appConfig.mediaBasePath+typeClass.getUploadDirectory(this.entity);
+                }
+            }
             return this.getFile().replace(/[^\/]*$/, '');
         },
 

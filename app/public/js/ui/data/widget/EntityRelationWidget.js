@@ -5,6 +5,7 @@ define( [
     "dojo/promise/all",
     "dojo/topic",
     "dojo/Deferred",
+    "dojo/dom-class",
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
     "dijit/_WidgetsInTemplateMixin",
@@ -31,6 +32,7 @@ function(
     all,
     topic,
     Deferred,
+    domClass,
     _WidgetBase,
     _TemplatedMixin,
     _WidgetsInTemplateMixin,
@@ -67,7 +69,9 @@ function(
             declare.safeMixin(this, args);
 
             // labels
-            this.relationName = Dict.translate(this.relation.name+" [Pl.]");
+            var relationName = this.relation.name +
+                    (parseInt(this.relation.maxMultiplicity) !== 1 ? " [Pl.]" : '');
+            this.relationName = Dict.translate(relationName);
 
             this.type = Model.getFullyQualifiedTypeName(this.relation.type);
             this.typeClass = Model.getType(this.type);
@@ -101,12 +105,15 @@ function(
                 this.gridWidget = new GridWidget({
                     type: this.relation.type,
                     store: RelationStore.getStore(this.entity.get('oid'), this.relation.name),
-                    columns: Model.getType(this.relation.type).displayValues,
+                    columns: Model.getType(this.type).getAttributes({exclude: ['DATATYPE_IGNORE']}).map(function(attribute) {
+                        return attribute.name;
+                    }),
                     actions: this.getGridActions(),
-                    enabledFeatures: enabledFeatures,
-                    height: 183
+                    enabledFeatures: enabledFeatures
                 }, this.gridNode);
                 this.gridWidget.startup();
+                domClass.add(this.gridWidget.gridNode, "multiplicity-"+this.relation.maxMultiplicity);
+                domClass.add(this.gridWidget.gridNode, "relation-"+this.relation.thisEndName+"-"+this.relation.name);
 
                 this.createBtn.set("disabled", this.relation.aggregationKind === "none" ||
                         this.permissions[this.type+'??create'] !== true);

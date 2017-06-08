@@ -2,6 +2,7 @@ define( [
     "require",
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/_base/config",
     "dojo/_base/array",
     "dojo/json",
     "dojo/Deferred",
@@ -13,6 +14,7 @@ function(
     require,
     declare,
     lang,
+    config,
     array,
     JSON,
     Deferred,
@@ -34,7 +36,7 @@ function(
 
         var inputTypeMap = {};
         var typeClass = Model.getType(type);
-        var attributes = typeClass.getAttributes('DATATYPE_ATTRIBUTE');
+        var attributes = typeClass.getAttributes({include: ['DATATYPE_ATTRIBUTE']});
 
         // collect all control classes
         for (var i=0, count=attributes.length; i<count; i++) {
@@ -56,7 +58,7 @@ function(
             var result = {};
             for (var key in inputTypeMap) {
                 var control = arguments[array.indexOf(controls, inputTypeMap[key])];
-                if (!(control instanceof Function)) {
+                if (!(typeof control === 'function')) {
                     deferred.reject({ message: "Control for input type '"+key+"' not found."});
                 }
                 result[key] = control;
@@ -71,7 +73,7 @@ function(
 
     Factory.getControlClass = function(inputType) {
         if (inputType) {
-            var inputTypes = appConfig.inputTypes;
+            var inputTypes = config.app.inputTypes;
 
             // get best matching control
             var bestMatch = '';
@@ -100,7 +102,7 @@ function(
         if (!options['list']) {
             throw new Error("Input type '"+inputType+"' does not contain a list definition");
         }
-        return ListStore.getStore(options['list'], appConfig.defaultLanguage);
+        return ListStore.getStore(options['list'], config.app.defaultLanguage);
     };
 
     /**
@@ -113,7 +115,8 @@ function(
     Factory.translateValue = function(inputType, value) {
         var deferred = new Deferred();
         when(Factory.getItem(inputType, value), function(item) {
-            var value = item !== null && item.hasOwnProperty('displayText') ? item.displayText : item;
+            var value = item && item.hasOwnProperty('displayText') ? item.displayText :
+                    item === undefined ? null : item;
             deferred.resolve(value);
         });
         return deferred;
@@ -154,7 +157,7 @@ function(
                 // NOTE loading all items once and caching the result
                 // is faster than resolving the value on each request
                 // store promise in cache and resolve later
-                var store = ListStore.getStore(options['list'], appConfig.defaultLanguage);
+                var store = ListStore.getStore(options['list'], config.app.defaultLanguage);
                 Factory._listCache[listKey] = store.fetch();
                 return Factory.getItem(inputType, value);
             }
@@ -168,7 +171,7 @@ function(
     /**
      * Get the options from the given input type
      * @param inputType The input type
-     * @returns String or null, if no list input type
+     * @returns Object
      */
     Factory.getOptions = function(inputType) {
         if (inputType) {
@@ -177,6 +180,24 @@ function(
             return options;
         }
         return {};
+    };
+
+    /**
+     * Add an empty item to a list definition
+     * @param inputType The input type
+     * @param emptyItem
+     * @returns String
+     */
+    Factory.addEmptyItem = function(inputType, emptyItem) {
+        if (inputType) {
+            var controlStr = inputType.match(/(.+?):/);
+            if (controlStr) {
+                var options = Factory.getOptions(inputType);
+                options['list']['emptyItem'] = emptyItem;
+                return controlStr[1]+':'+JSON.stringify(options);
+            }
+        }
+        return inputType;
     };
 
     /**

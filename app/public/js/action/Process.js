@@ -1,15 +1,19 @@
 define([
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/_base/config",
     "dojo/request",
     "dojo/request/iframe",
-    "dojo/Deferred"
+    "dojo/Deferred",
+    "../AuthToken"
 ], function (
     declare,
     lang,
+    config,
     request,
     iframe,
-    Deferred
+    Deferred,
+    AuthToken
 ) {
     /**
      * Process wrapper class. A process is typically executed
@@ -37,20 +41,16 @@ define([
          * @return Deferred
          */
         run: function(params) {
-            return this.doCall(params);
+            this.deferred = new Deferred();
+            this.doCall(params);
+            return this.deferred;
         },
 
         /**
          * Make a backend call.
          * @param params Additional parameters to be passed with the initial call
-         * @return Deferred
          */
         doCall: function(params) {
-            // create deferred on first call
-            if (this.deferred === null) {
-                this.deferred = new Deferred();
-            }
-
             request.post(this.getBackendUrl(), {
                 data: params,
                 headers: {
@@ -67,7 +67,6 @@ define([
                 // error
                 this.deferred.reject(error);
             }));
-            return this.deferred;
         },
 
         /**
@@ -90,10 +89,13 @@ define([
             });
 
             if (response.status === 'download') {
+                var data = {};
+                data[AuthToken.name] = AuthToken.get();
                 iframe(this.getBackendUrl(), {
                     preventCache: true,
                     timeout: 1000,
-                    method: "POST"
+                    method: "POST",
+                    data: data
                 });
                 this.deferred.resolve(response);
             }
@@ -103,12 +105,14 @@ define([
             }
             else {
                 // do the proceeding calls
-                this.doCall();
+                if (!this.deferred.isCanceled()) {
+                    this.doCall();
+                }
             }
         },
 
         getBackendUrl: function() {
-            var url = appConfig.backendUrl+'process/'+this.name;
+            var url = config.app.backendUrl+'process/'+this.name;
             if (this.started) {
                 url += '/continue';
             }

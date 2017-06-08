@@ -1,6 +1,7 @@
 define([
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/_base/config",
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
     "dijit/_WidgetsInTemplateMixin",
@@ -13,7 +14,7 @@ define([
     "dojo/dom-construct",
     "dojo/dom-class",
     "dojo/dom-attr",
-    "dojo/dom-style",
+    "./MediaBrowserDlgWidget",
     "../../../User",
     "../../../model/meta/Model",
     "../../../locale/Dictionary",
@@ -22,6 +23,7 @@ define([
 ], function (
     declare,
     lang,
+    config,
     _WidgetBase,
     _TemplatedMixin,
     _WidgetsInTemplateMixin,
@@ -34,7 +36,7 @@ define([
     domConstruct,
     domClass,
     domAttr,
-    domStyle,
+    MediaBrowserDlg,
     User,
     Model,
     Dict,
@@ -42,19 +44,16 @@ define([
 ) {
     return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
 
-        titleOnly: false,
         templateString: lang.replace(template, Dict.tplTranslate),
         selected: null,
 
         constructor: function (params) {
-            this.titleOnly = params.titleOnly;
-
             // template variables
-            this.title = appConfig.title;
+            this.title = config.app.title;
             this.userName = User.getLogin();
-            this.firstRootType = Model.getSimpleTypeName(appConfig.rootTypes[0]);
-            this.userType = Model.getSimpleTypeName(appConfig.userType);
-            this.permissionType = Model.getSimpleTypeName(appConfig.permissionType);
+            this.userType = Model.getSimpleTypeName(config.app.userType);
+            this.permissionType = Model.getSimpleTypeName(config.app.permissionType);
+            this.lockType = Model.getSimpleTypeName(config.app.lockType);
         },
 
         postCreate: function() {
@@ -81,8 +80,9 @@ define([
             );
 
             // add type menu items to content drop down
-            for (var i=0, count=appConfig.rootTypes.length; i<count; i++) {
-                var typeName = appConfig.rootTypes[i];
+            var rootTypes = config.app.rootTypes;
+            for (var i=0, count=rootTypes.length; i<count; i++) {
+                var typeName = rootTypes[i];
                 var menuItem = '<li class="push" data-wcmf-route="entityList" data-wcmf-pathparams="type:\''+typeName+'\'">'+
                     '<a href="#"><i class="fa fa-list"></i> '+Dict.translate(typeName+" [Pl.]")+'</a></li>';
                 domConstruct.place(menuItem, this.contentDropDown);
@@ -106,16 +106,10 @@ define([
                 }
             }));
 
-            // hide buttons, if titleOnly
-            if (this.titleOnly) {
-                query(".main-menu").style("display", "none");
-            }
-            else {
-                // set selected menu
-                query(".main-menu").removeClass("active");
-                if (this.selected) {
-                    query("#"+this.selected).addClass("active");
-                }
+            // set selected menu
+            query(".main-menu").removeClass("active");
+            if (this.selected) {
+                query("#"+this.selected).addClass("active");
             }
         },
 
@@ -132,7 +126,7 @@ define([
         _navigateMedia: function(e) {
             // prevent the page from navigating after submit
             e.preventDefault();
-            topic.publish('navigate', 'media', null, null, {name:'_blank', specs:'width=800,height=700'});
+            new MediaBrowserDlg().show();
         }
     });
 });

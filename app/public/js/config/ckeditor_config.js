@@ -8,9 +8,21 @@ basePath = basePath.substr(0, basePath.indexOf("ckeditor/"));
    CKEDITOR.plugins.addExternal('mediaembed', basePath+'ckeditor-plugins/mediaembed/', 'plugin.js');
 })();
 
+// fix inserting spans in chrome
+// @see http://ckeditor.com/forums/CKEditor/ckeditor-4.01-inserting-span-elements-everywhere-with-a-line-height-of-1.6em
+(function() {
+    var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+    if (isChrome) {
+        CKEDITOR.on( 'instanceLoaded', function( e ){
+            this.addCss('.cke_editable { line-height: normal; }');
+        });
+    }
+})();
+
 CKEDITOR.editorConfig = function( config ) {
-    config.language = appConfig.uiLanguage;
-    config.stylesSet = 'default:'+appConfig.pathPrefix+'js/config/ckeditor_styles.js';
+    config.language = dojoConfig.app.uiLanguage;
+    config.stylesSet = 'default:'+dojoConfig.app.pathPrefix+'js/config/ckeditor_styles.js';
+    config.baseFloatZIndex = 900;
     config.forcePasteAsPlainText = true;
     config.resize_dir = 'vertical';
     config.stylesSet = [
@@ -28,5 +40,5 @@ CKEDITOR.editorConfig = function( config ) {
         ['Bold','Italic','RemoveFormat'],['Table','BulletedList','HorizontalRule','SpecialChar'],['Format','Styles'],['About']
     ];
     config.toolbar = 'wcmf';
-    config.contentsCss = 'css/app.css';
+    config.contentsCss = dojoConfig.app.pathPrefix+'css/app.css';
 };

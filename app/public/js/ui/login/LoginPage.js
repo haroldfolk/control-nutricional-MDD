@@ -2,6 +2,7 @@ define([
     "require",
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/_base/config",
     "dojo/dom-form",
     "dijit/form/TextBox",
     "../_include/_PageMixin",
@@ -17,6 +18,7 @@ define([
     require,
     declare,
     lang,
+    config,
     domForm,
     TextBox,
     _Page,
@@ -37,7 +39,7 @@ define([
 
         constructor: function (params) {
             // template variables
-            this.title = appConfig.title;
+            this.title = config.app.title;
         },
 
         postCreate: function() {
@@ -45,7 +47,7 @@ define([
         },
 
         setHeaderBackground: function() {
-            this.header.setAttribute('style', 'background-image: '+appConfig.background);
+            this.header.setAttribute('style', 'background-image: '+config.app.background);
         },
 
         /**
@@ -96,11 +98,13 @@ define([
                       var redirectRoute = this.request.getQueryParam("route");
                       if (redirectRoute) {
                           // redirect to initially requested route if given
-                          window.location.assign(this.request.getPathname()+redirectRoute);
+                          this.pushState(this.request.getPathname()+redirectRoute);
                       }
                       else {
                           // redirect to default route
-                          window.location.assign(this.request.getPathname()+"home");
+                          var route = this.router.getRoute("home");
+                          var url = route.assemble();
+                          this.pushState(url);
                       }
                 }), lang.hitch(this, function(error) {
                       // error
