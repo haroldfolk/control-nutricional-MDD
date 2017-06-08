@@ -889,7 +889,7 @@
       </children>
       <children xmi:type="notation:DecorationNode" xmi:id="_Sgu7REmfEeeKLPkawJpUyg" type="Association_TargetRoleLabel">
         <styles xmi:type="notation:BooleanValueStyle" xmi:id="_TmykYEmfEeeKLPkawJpUyg" name="IS_UPDATED_POSITION" booleanValue="true"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_Sgu7RUmfEeeKLPkawJpUyg" x="55" y="-19"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_Sgu7RUmfEeeKLPkawJpUyg" x="41" y="-16"/>
       </children>
       <children xmi:type="notation:DecorationNode" xmi:id="_Sgu7RkmfEeeKLPkawJpUyg" type="Association_SourceRoleLabel">
         <styles xmi:type="notation:BooleanValueStyle" xmi:id="_Tno48EmfEeeKLPkawJpUyg" name="IS_UPDATED_POSITION" booleanValue="true"/>
