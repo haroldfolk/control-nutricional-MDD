@@ -1860,17 +1860,17 @@
               <packagedElement xmi:type="uml:Class" xmi:id="_f4Ce0Er4EeeofsFDT7VFVA" name="Cargo">
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_B3e_0Er5EeeofsFDT7VFVA" name="nombre" type="_agg3ALQwEeOLlbB2YLI0iw"/>
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_IToj4Er5EeeofsFDT7VFVA" name="descripcion" type="_agg3ALQwEeOLlbB2YLI0iw" isUnique="false"/>
-                <ownedAttribute xmi:type="uml:Property" xmi:id="_zxmTIEsMEeeofsFDT7VFVA" name="enfermera" type="_OrbgEEkPEeePM6e6eZiCcw" association="_zxeXUEsMEeeofsFDT7VFVA"/>
               </packagedElement>
               <packagedElement xmi:type="uml:Association" xmi:id="_zxeXUEsMEeeofsFDT7VFVA" memberEnd="_zxlsEEsMEeeofsFDT7VFVA _zxmTIEsMEeeofsFDT7VFVA">
                 <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_zxlFAEsMEeeofsFDT7VFVA" source="org.eclipse.papyrus">
                   <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_zxlFAUsMEeeofsFDT7VFVA" key="nature" value="UML_Nature"/>
                 </eAnnotations>
+                <ownedEnd xmi:type="uml:Property" xmi:id="_zxmTIEsMEeeofsFDT7VFVA" name="enfermera" type="_OrbgEEkPEeePM6e6eZiCcw" association="_zxeXUEsMEeeofsFDT7VFVA"/>
               </packagedElement>
               <packagedElement xmi:type="uml:Class" xmi:id="_AGNtcEwgEee62slmO6PM1A" name="HistoricoClinico">
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_HyTPYEwgEee62slmO6PM1A" name="motivo" type="_agg3ALQwEeOLlbB2YLI0iw" isUnique="false"/>
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_kB7RYEwhEee62slmO6PM1A" name="descripcion" type="_agg3ALQwEeOLlbB2YLI0iw" isUnique="false"/>
-                <ownedAttribute xmi:type="uml:Property" xmi:id="_oDQt8EwjEee62slmO6PM1A" name="observaciones"/>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_oDQt8EwjEee62slmO6PM1A" name="observaciones" type="_agg3ALQwEeOLlbB2YLI0iw"/>
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_SLX_MEwkEee62slmO6PM1A" name="paciente" type="_pAMlcEjwEeePM6e6eZiCcw" association="_SLWKAEwkEee62slmO6PM1A"/>
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_TJ-VcEwkEee62slmO6PM1A" name="paciente" type="_agg3ALQwEeOLlbB2YLI0iw" isUnique="false"/>
               </packagedElement>
